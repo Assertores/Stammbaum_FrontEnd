@@ -1,0 +1,9 @@
+build/
+
+*.o
+*.swp
+*.a
+*.exe
+
+compile_commands.json
+
