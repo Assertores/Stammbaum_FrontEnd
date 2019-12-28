@@ -7,8 +7,9 @@
 #include "utility/types.h"
 #include "utility/stringCollection.h"
 
-int main (int argc, cString argv[]){
+void InputQuary(int* id, int* dist);
 
+int main(int argc, cString argv[]) {
 
 	//===== ===== Init ===== =====
 
@@ -63,8 +64,22 @@ int main (int argc, cString argv[]){
 
 	//funktion call to backend
 
-	//
-	
+	//===== ===== Programm Loop ===== =====
+
+	int id;
+	int dist;
+
+	bool exit = false;
+	while(!exit) {
+		//----- ----- input ----- -----
+		InputQuary(&id, &dist);
+
+		//----- ----- logic ----- -----
+		//funktion call quarry relationships
+
+		//----- ----- rendering ----- -----
+	}
+
 	peoples.close();
 	titles.close();
 	firstNames.close();
@@ -73,4 +88,19 @@ int main (int argc, cString argv[]){
 	relationships.close();
 
 	return 0;
+}
+
+void InputQuary(int* id, int* dist){
+	
+	std::cout << INPUTREQUEST;
+	std::cin >> *id >> *dist;
+
+	while(std::cin.fail()){
+		std::cin.clear();
+		std::cin.ignore();
+		std::cin.ignore(INT_MAX, '\n');
+
+		std::cout << FAILEDINPUT;
+		std::cin >> *id >> *dist;
+	}
 }
