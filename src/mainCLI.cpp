@@ -5,56 +5,59 @@
 
 //===== ===== Intern ===== =====
 #include "utility/types.h"
+#include "utility/stringCollection.h"
 
 int main (int argc, cString argv[]){
 
-	if(2 != argc){
-		std::cout << "you have to pass exagtly one argument" << std::endl;
+
+	//===== ===== Init ===== =====
+
+	if(2 != argc) {
+		std::cout << ERROR_ARGUMENTCOUNT << std::endl;
 		return -1;
 	}
 
 	std::string path = argv[1];
 
-	std::ifstream peoples(path + "/People.csv");
+	std::ifstream peoples(path + FILE_PEOPLES);
 
-	if(!peoples){
-		std::cout << "no People.csv file found" << std::endl;
+	if(!peoples) {
+		std::cout << ERROR_PEOPLES << std::endl;
 		return -2;
 	}
 
-	std::ifstream titles(path + "/Titles.csv");
+	std::ifstream titles(path + FILE_TITLES);
 
 	if(!titles) {
-		std::cout << "no Titles.csv file found" << std::endl;
+		std::cout << ERROR_TITLES << std::endl;
 		return -3;
 	}
 
-	std::ifstream firstNames(path + "/FirstNames.csv");
+	std::ifstream firstNames(path + FILE_FIRSTNAMES);
 
 	if(!firstNames) {
-		std::cout << "no FirstNames.csv file found" << std::endl;
+		std::cout << ERROR_FIRSTNAMES << std::endl;
 		return -4;
 	}
 
-	std::ifstream lastNames(path + "/LastNames.csv");
+	std::ifstream lastNames(path + FILE_LASTNAMES);
 
 	if(!lastNames) {
-		std::cout << "no LastNames.csv file found" << std::endl;
+		std::cout << ERROR_LASTNAMES << std::endl;
 		return -5;
 	}
 
-
-	std::ifstream bloodLines(path + "/Bloodline.csv");
+	std::ifstream bloodLines(path + FILE_BLOODLINES);
 
 	if(!bloodLines) {
-		std::cout << "no Bloodline.csv file found" << std::endl;
+		std::cout << ERROR_BLOODLINES << std::endl;
 		return -6;
 	}
 
-	std::ifstream relationships(path + "/Relationships.csv");
+	std::ifstream relationships(path + FILE_RELATIONSHIPS);
 
 	if(!relationships) {
-		std::cout << "no Relationships.csv file found" << std::endl;
+		std::cout << ERROR_RELATIONSHIPS << std::endl;
 		return -7;
 	}
 
