@@ -5,6 +5,8 @@ add_library(csv_parser
 	csv_parser.cpp
 )
 
+target_compile_features(csv_parser PUBLIC cxx_std_17)
+
 ############################
 
 add_executable(csv_test
