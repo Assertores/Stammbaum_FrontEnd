@@ -20,7 +20,11 @@ void dataHandler::InitTables(const std::ifstream& peoples, const std::ifstream& 
 	InitRelationshipsTable(relationships);
 }
 
-std::vector<relation> dataHandler::GetRelations(const int rootID, const int dinst){
+std::set<blood> dataHandler::GetBloodLines(const int rootID = 0, const int dinst = -1){
+	assert(false && "not implimented");
+}
+
+std::set<relation> dataHandler::GetRelations(const int rootID, const int dinst){
 	assert(false && "not implimented");
 }
 

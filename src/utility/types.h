@@ -21,10 +21,18 @@ enum sexType {
 	deverce,
 };
 
+struct blood {
+	int objectID;
+	int subjectID;
+	relType type;
+};
+
 struct relation {
 	int objectID;
 	int subjectID;
 	relType type;
+	std::chrono::system_clock::time_point start;
+	std::chrono::system_clock::time_point end;
 };
 
 struct personInfos{

@@ -2,7 +2,7 @@
 
 //===== ===== Extern ===== =====
 #include <fstream>
-#include <vector>
+#include <set>
 
 //===== ===== Intern ===== =====
 #include "../utility/types.h"
@@ -16,12 +16,20 @@ public:
 	static void InitTables(const std::ifstream& peoples, const std::ifstream& titles, const std::ifstream& firstNames, const std::ifstream& lastNames, const std::ifstream&bloodLines, const std::ifstream& relationships);
 
 	/// <summary>
-	/// retreave a subtree of the data. retreaves the whole tree or even multiple trees.
+	/// retreave a subtree of the data. retreaves the whole tree or even multiple trees. only bloodlines
 	/// </summary>
 	/// <param rootID = 0>the id of the person in question</param>
 	/// <param dinst = -1>the max distance of relationships removed from the person</param>
 	/// <return>a list of all relevant relations</return>
-	static std::vector<relation> GetRelations(const int rootID = 0, const int dinst = -1);
+	static std::set<blood> GetBloodLines(const int rootID = 0, const int dinst = -1);
+
+	/// <summary>
+	/// retreave a subtree of the data. retreaves the whole tree or even multiple trees. only relationships
+	/// </summary>
+	/// <param rootID = 0>the id of the person in question</param>
+	/// <param dinst = -1>the max distance of relationships removed from the person</param>
+	/// <return>a list of all relevant relations</return>
+	static std::set<relation> GetRelations(const int rootID = 0, const int dinst = -1);
 
 	/// <summary>
 	/// you know. SQL and so ...
