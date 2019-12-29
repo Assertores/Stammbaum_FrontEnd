@@ -2,12 +2,15 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <set>
 
 //===== ===== Intern ===== =====
 #include "utility/types.h"
 #include "utility/stringCollection.h"
+#include "backend/dataHandler.h"
 
 void InputQuary(int* id, int* dist);
+std::vector<std::set<int>>SortPersons(std::set<blood>& rels);
 
 int main(int argc, cString argv[]) {
 
@@ -62,7 +65,7 @@ int main(int argc, cString argv[]) {
 		return -7;
 	}
 
-	//funktion call to backend
+	dataHandler::InitTables(peoples, titles, firstNames, lastNames, bloodLines, relationships);
 
 	//===== ===== Programm Loop ===== =====
 
@@ -75,9 +78,13 @@ int main(int argc, cString argv[]) {
 		InputQuary(&id, &dist);
 
 		//----- ----- logic ----- -----
-		//funktion call quarry relationships
+		auto bloods = dataHandler::GetBloodLines(id, dist);
+		auto rels = dataHandler::GetRelations(id, dist);
+
+
 
 		//----- ----- rendering ----- -----
+
 	}
 
 	peoples.close();
@@ -103,4 +110,26 @@ void InputQuary(int* id, int* dist){
 		std::cout << FAILEDINPUT;
 		std::cin >> *id >> *dist;
 	}
+}
+
+std::vector<std::set<int>>SortPersons(std::set<blood>& rels){
+	std::vector<std::set<int>> value;
+	std::set<int> highestPersons;
+	
+	for(int i = 0; i < rels.size; i++){
+		bool isHighest = true;
+		for(int j = 0; j < rels.size; j++){
+			if(rels[i].objectID == rels[j].subjectID){//person has parents
+				isHighest = false;
+				break;
+			}
+		}
+
+		if(isHighest){
+			highestPersons.emplace(rels[i].subjectID);
+		}
+	}
+
+	value.emplace_back(highestPersons);
+
 }
