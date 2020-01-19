@@ -4,11 +4,12 @@ add_subdirectory(./csv_parser)
 
 add_executable(sb_test1
 	utility/types.h
+	utility/printer.h
+	utility/printer.cpp
 
 	backend/dataHandler.h
+	backend/dataHandler.cpp
 
 	sb_test1.cpp
-	mainCLI.cpp
-	backend/dataHandler.cpp
+	#mainCLI.cpp
 )
-

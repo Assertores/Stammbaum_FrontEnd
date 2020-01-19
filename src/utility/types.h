@@ -16,9 +16,9 @@ enum relType {
 };
 
 enum sexType {
-	male,
-	female,
-	deverce,
+	Male,
+	Female,
+	Deverce,
 };
 
 struct blood {
@@ -38,14 +38,14 @@ struct relation {
 struct personInfos{
 	std::vector<cString> titles;
 	std::vector<cString> firstNames;
-	cString suffix;
+	cString suffix = nullptr;
 	std::vector<cString> lastNames;
 	sexType sex;
 	std::chrono::system_clock::time_point birthday;
-	cString placeOfBirth;
+	cString placeOfBirth = nullptr;
 	std::chrono::system_clock::time_point death;
-	cString placeOfDeath;
-	cString remarks;
+	cString placeOfDeath = nullptr;
+	cString remarks = nullptr;
 	//audiofile
 	//pictures
 	//video
