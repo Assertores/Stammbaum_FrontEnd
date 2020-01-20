@@ -53,11 +53,11 @@ cString sexToString(sexType t) {
 char sexToChar(sexType t) {
 	switch(t) {
 	case Male:
-		return '♂';
+		return 'M'/*'♂'*/;
 	case Female:
-		return '♀';
+		return 'F'/*'♀'*/;
 	case Deverce:
-		return '⚥';
+		return 'D'/*'⚥'*/;
 	default:
 		return '#';
 	}
@@ -65,7 +65,7 @@ char sexToChar(sexType t) {
 
 //┌──────────────────┴───────────────────┐
 //│Prof. Andreas E. F. von und zu Edmeier│
-//│♂ | * 20.01.2020 | + 20.01.2020       │
+//│   ♂ | * 20.01.2020 | + 20.01.2020    │
 //└──────────────────┬───────────────────┘
 std::string PersonToString(personInfos person, bool longVariant/* = true*/) {
 	std::stringstream value;
@@ -136,7 +136,7 @@ std::string PersonToString(personInfos person, bool longVariant/* = true*/) {
 	}
 
 	if(longVariant) {
-		value << "death: " << person.death;
+		value << "Death: " << person.death;
 		if(person.placeOfDeath != nullptr)
 			value << " at: " << person.placeOfDeath;
 		value << std::endl;
@@ -185,7 +185,7 @@ std::string PersonToString(personInfos person, bool longVariant/* = true*/) {
 //   ├────┘
 // ┌─┴─┐
 // │17 │
-// └─┬─┘
+// └───┘
 
 // ┌─┴─┐ ┌─┴─┐ ┌─┴─┐ ┌─┴─┐
 // │   │ │   │ │   │ │   │

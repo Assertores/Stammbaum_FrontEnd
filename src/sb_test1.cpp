@@ -6,6 +6,7 @@
 #include "utility/types.h"
 #include "utility/printer.h"
 #include "frontend/calculate.h"
+#include "frontend/MLMSElement.h"
 
 int main(void) {
 
@@ -39,6 +40,14 @@ int main(void) {
 
 	std::cout << PersonToString(p1) << std::endl << std::endl;
 	std::cout << PersonToString(p1, false) << std::endl << std::endl;
+
+	MLMSElement p1Handler(PersonToString(p1, false), Box);
+	MLMSElement p1Long(PersonToString(p1), Box);
+
+	std::cout << "element width: " << p1Handler.GetSize() << ", " << p1Long.GetSize() << std::endl;
+	for(int i = 0; i < p1Long.GetLineCount(); i++) {
+		std::cout << p1Handler.GetLine(i) << " ! " << p1Long.GetLine(i) << std::endl;
+	}
 
 	personInfos p2;
 

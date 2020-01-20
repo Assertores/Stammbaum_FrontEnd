@@ -13,9 +13,10 @@ add_executable(sb_test1
 
 	frontend/treeBuilderElement.h
 	frontend/treeBuilderElement.cpp
-
 	frontend/calculate.h
 	frontend/calculate.cpp
+	frontend/MLMSElement.h
+	frontend/MLMSElement.cpp
 
 	sb_test1.cpp
 	#mainCLI.cpp
