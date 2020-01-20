@@ -25,6 +25,10 @@ struct blood {
 	int objectID;
 	int subjectID;
 	relType type;
+
+	bool operator < (const blood& rhs) const {
+		return (objectID != rhs.objectID) ? objectID < rhs.objectID : subjectID < rhs.subjectID;
+	}
 };
 
 struct relation {
@@ -33,9 +37,13 @@ struct relation {
 	relType type;
 	std::chrono::system_clock::time_point start;
 	std::chrono::system_clock::time_point end;
+
+	bool operator < (const blood& rhs) const {
+		return (objectID != rhs.objectID) ? objectID < rhs.objectID : subjectID < rhs.subjectID;
+	}
 };
 
-struct personInfos{
+struct personInfos {
 	std::vector<cString> titles;
 	std::vector<cString> firstNames;
 	cString suffix = nullptr;

@@ -1,8 +1,6 @@
 //===== ===== Extern ===== =====
 #include <iostream>
 #include <fstream>
-#include <string>
-#include <set>
 
 //===== ===== Intern ===== =====
 #include "utility/types.h"
@@ -11,8 +9,6 @@
 #include "backend/dataHandler.h"
 
 void InputQuary(int* id, int* dist);
-std::set<int> GetAllPersons(std::set<blood> blds, std::set<relation> rels);
-std::vector<std::set<int>> SortPersons(std::set<blood> rels);
 
 int main(int argc, cString argv[]) {
 
@@ -90,8 +86,9 @@ int main(int argc, cString argv[]) {
 		for(auto& it : peoplesToDraw) {
 			std::cout << PersonToString(dataHandler::GetPerson(it)) << std::endl;
 		}
-
 	}
+
+	//===== ===== Clean Up ===== =====
 
 	peoples.close();
 	titles.close();
@@ -116,74 +113,4 @@ void InputQuary(int* id, int* dist) {
 		std::cout << FAILEDINPUT;
 		std::cin >> *id >> *dist;
 	}
-}
-
-std::set<int> GetAllPersons(std::set<blood> blds, std::set<relation> rels) {
-	std::set<int> value;
-
-	for(auto& it : blds) {
-		value.emplace(it.objectID);
-		value.emplace(it.subjectID);
-	}
-	for(auto& it : rels) {
-		value.emplace(it.objectID);
-		value.emplace(it.subjectID);
-	}
-
-	return value;
-}
-
-std::vector<std::set<int>>SortPersons(std::set<blood> rels) {
-	std::vector<std::set<int>> value;
-
-	/*
-	{
-		std::set<int> currentSet;
-		//go throw all relations
-		for(auto& it : rels) {
-			//ask if it subject has no childrens
-			bool isLowest = true;
-			for(auto& jt : rels) {
-				if(it.subjectID == jt.objectID) {
-					isLowest = false;
-					break;
-				}
-			}
-			//adding subject to the current set
-			if(isLowest) {
-				currentSet.emplace(it.subjectID);
-			}
-		}
-		value.emplace_back(currentSet);
-
-		//remove all relationships to persons of the current set
-		for(auto it = rels.begin(); it != rels.end();) {
-			if(currentSet.count(it->subjectID)) {
-				it = rels.erase(it);
-				continue;
-			}
-			it++;
-		}
-	}
-
-	std::set<int> highestPersons;
-
-	for(int i = 0; i < rels.size; i++) {
-		bool isHighest = true;
-		for(int j = 0; j < rels.size; j++) {
-			if(rels[i].objectID == rels[j].subjectID) {//person has parents
-				isHighest = false;
-				break;
-			}
-		}
-
-		if(isHighest) {
-			highestPersons.emplace(rels[i].subjectID);
-		}
-	}
-
-	value.emplace_back(highestPersons);
-	*/
-
-	return value;
 }
