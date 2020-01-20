@@ -44,6 +44,7 @@ std::vector<std::set<int>>SortPersons(std::set<blood>& rels) {
 		std::set<int> allPersons = GetAllPersons(rels);
 		for(auto& it : allPersons) {
 			treeBuilderElement element;
+			element.id = it;
 			treePersons[it] = element;
 		}
 	}

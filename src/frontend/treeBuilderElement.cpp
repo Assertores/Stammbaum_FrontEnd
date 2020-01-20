@@ -2,39 +2,39 @@
 
 #include <iostream>
 
-void treeBuilderElement::UpdateDown(int newHight) {
-	if(number < newHight) {
-#ifdef DB_Tree
-		std::cout << "In  (" << id << ")" << std::endl;
+void treeBuilderElement::UpdateDown(int newHight, bool fromChild/* = false*/) {
+#ifdef DB_TREE
+		std::cout << "In  (" << id << "| " << number << ", " << newHight << ")" << std::endl;
 #endif
+	if(number < newHight) {
 		number = newHight;
 
 		for(int i = 0; i < childrens.size(); i++) {
 			childrens[i]->UpdateDown(number + 1);
 		}
 	}
-	SquashUp();//might be permanent loop
-#ifdef DB_Tree
-	std::cout << "Out (" << id << ")" << std::endl;
+	if(!fromChild)
+		SquashUp();//might be permanent loop
+#ifdef DB_TREE
+	std::cout << "Out (" << id << "| " << number << ")" << std::endl;
 #endif
 }
 
 void treeBuilderElement::SquashUp() {
-#ifdef DB_Tree
-	std::cout << "Up  (" << id << ")" << std::endl;
-#endif
-
 	if(parents.size() == 0)
 		return;
 
-	//alle Parents auf den höhesten wert setzen
+	//alle Parents auf den hÃ¶hesten wert setzen
 	int maxNumber = -1;
 	for(int i = 0; i < parents.size(); i++) {
 		maxNumber = maxNumber > parents[i]->number ? maxNumber : parents[i]->number;
 	}
+#ifdef DB_TREE
+	std::cout << "Up  (" << id << "| " << maxNumber << ")" << std::endl;
+#endif
 
 	//Childrens von Parents updaten lassen
 	for(int i = 0; i < parents.size(); i++) {
-		parents[i]->UpdateDown(maxNumber);
+		parents[i]->UpdateDown(maxNumber, true);
 	}
 }
