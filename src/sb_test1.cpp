@@ -1,11 +1,15 @@
 #include <iostream>
 #include <vector>
 #include <chrono>
+#include <set>
 
 #include "utility/types.h"
 #include "utility/printer.h"
+#include "frontend/calculate.h"
 
 int main(void) {
+
+	//===== ===== Test Persons ===== =====
 
 	personInfos p1;
 
@@ -41,7 +45,40 @@ int main(void) {
 	std::cout << PersonToString(p2) << std::endl << std::endl;
 	std::cout << PersonToString(p2, false) << std::endl << std::endl;
 
+	//===== ===== Relations ===== =====
+
+	std::set<blood> relations;
+
+	relations.emplace(blood {0, 11, Father});
+	relations.emplace(blood {1, 11, Mother});
+	relations.emplace(blood {0, 2, Father});
+	relations.emplace(blood {1, 2, Mother});
+	relations.emplace(blood {0, 4, Father});
+	relations.emplace(blood {1, 4, Mother});
+	relations.emplace(blood {2, 9, Father});
+	relations.emplace(blood {3, 9, Mother});
+	relations.emplace(blood {4, 6, Father});
+	relations.emplace(blood {5, 6, Mother});
+	relations.emplace(blood {7, 8, Father});
+	relations.emplace(blood {6, 8, Mother});
+	relations.emplace(blood {9, 10, Father});
+	relations.emplace(blood {8, 10, Mother});
+	relations.emplace(blood {12, 13, Father});
+	relations.emplace(blood {11, 13, Mother});
+	relations.emplace(blood {14, 15, Father});
+	relations.emplace(blood {13, 15, Mother});
+	relations.emplace(blood {11, 16, Mother});
+	relations.emplace(blood {10, 16, Father});
+	relations.emplace(blood {15, 17, Father});
+	relations.emplace(blood {16, 17, Mother});
+	
+	auto retVal = SortPersons(relations);
+	
+	for(int i = 0; i < retVal.size(); i++) {
+		for(auto& it : retVal[i]) {
+			std::cout << it << ", ";
+		}std::cout << std::endl;
+	}
 
 	return 0;
 }
-
