@@ -4,11 +4,18 @@ add_subdirectory(./csv_parser)
 
 add_executable(sb_test1
 	utility/types.h
+	utility/stringCollection.h
 	utility/printer.h
 	utility/printer.cpp
 
 	backend/dataHandler.h
 	backend/dataHandler.cpp
+
+	frontend/treeBuilderElement.h
+	frontend/treeBuilderElement.cpp
+
+	frontend/calculate.h
+	frontend/calculate.cpp
 
 	sb_test1.cpp
 	#mainCLI.cpp
