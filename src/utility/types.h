@@ -35,8 +35,8 @@ struct relation {
 	int objectID;
 	int subjectID;
 	relType type;
-	std::chrono::system_clock::time_point start;
-	std::chrono::system_clock::time_point end;
+	std::tm start;
+	std::tm end;
 
 	bool operator < (const blood& rhs) const {
 		return (objectID != rhs.objectID) ? objectID < rhs.objectID : subjectID < rhs.subjectID;
@@ -49,9 +49,9 @@ struct personInfos {
 	cString suffix = nullptr;
 	std::vector<cString> lastNames;
 	sexType sex;
-	std::chrono::system_clock::time_point birthday;
+	std::tm birthday;
 	cString placeOfBirth = nullptr;
-	std::chrono::system_clock::time_point death;
+	std::tm death;
 	cString placeOfDeath = nullptr;
 	cString remarks = nullptr;
 	//audiofile

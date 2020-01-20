@@ -7,6 +7,14 @@ std::ostream& operator<<(std::ostream & os, const std::chrono::system_clock::tim
 	return os << std::put_time(std::localtime(&tt), "%d.%m.%Y");
 }
 
+std::ostream& operator<<(std::ostream& os, const std::tm& time) {
+	if(time.tm_mon < 0 || time.tm_mon > 12 ||
+	   time.tm_yday < 0 || time.tm_yday > 358)
+		return os << "Invalide Date";
+
+	return os << std::put_time(&time, "%d.%m.%Y");
+}
+
 cString relToString(relType t) {
 	switch(t) {
 	case Father:

@@ -7,6 +7,7 @@
 #include "utility/printer.h"
 #include "frontend/calculate.h"
 #include "frontend/MLMSElement.h"
+#include "csv_parser/csv_parser.hpp"
 
 int main(void) {
 
@@ -30,10 +31,12 @@ int main(void) {
 
 	p1.sex = Male;
 
-	p1.birthday = std::chrono::system_clock::now();
+	//p1.birthday = std::chrono::system_clock::now();
+	p1.birthday = csv_parser::parse_entry<std::tm>("04.05.1996");
 	p1.placeOfBirth = "Burgkrichen";
 
-	p1.death = std::chrono::system_clock::now();
+	//p1.death = std::chrono::system_clock::now();
+	p1.death = csv_parser::parse_entry<std::tm>("11.11.2020");
 	p1.placeOfDeath = "Berlin";
 
 	p1.remarks = "is testing stuff";
@@ -80,9 +83,9 @@ int main(void) {
 	relations.emplace(blood {10, 16, Father});
 	relations.emplace(blood {15, 17, Father});
 	relations.emplace(blood {16, 17, Mother});
-	
+
 	auto retVal = SortPersons(relations);
-	
+
 	for(int i = 0; i < retVal.size(); i++) {
 		for(auto& it : retVal[i]) {
 			std::cout << it << ", ";
