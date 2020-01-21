@@ -44,12 +44,21 @@ int main(void) {
 	std::cout << PersonToString(p1) << std::endl << std::endl;
 	std::cout << PersonToString(p1, false) << std::endl << std::endl;
 
-	MLMSElement p1Handler(PersonToString(p1, false), Box);
-	MLMSElement p1Long(PersonToString(p1), Box);
+	MLMSElement pHolder[3] = {
+		MLMSElement(PersonToString(p1, false), Box),
+		MLMSElement("", NoBox , '|', 1),
+		MLMSElement(PersonToString(p1), Box),
+	};
 
-	std::cout << "element width: " << p1Handler.GetSize() << ", " << p1Long.GetSize() << std::endl;
-	for(int i = 0; i < p1Long.GetLineCount(); i++) {
-		std::cout << p1Handler.GetLine(i) << " ! " << p1Long.GetLine(i) << std::endl;
+	int maxLength = -1;
+	for(int i = 0; i < 3; i++) {
+		maxLength = maxLength > pHolder[i].GetLineCount() ? maxLength : pHolder[i].GetLineCount();
+	}
+
+	for(int i = 0; i < maxLength; i++) {
+		for(int j = 0; j < 3; j++) {
+			std::cout << pHolder[j].GetLine(i);
+		}std::cout << std::endl;
 	}
 
 	personInfos p2;
@@ -89,6 +98,66 @@ int main(void) {
 	for(int i = 0; i < retVal.size(); i++) {
 		for(auto& it : retVal[i]) {
 			std::cout << it << ", ";
+		}std::cout << std::endl;
+	}
+
+	std::vector<std::pair<std::set<int>, std::set<int>>> plumbing;
+	
+	{
+		std::pair<std::set<int>, std::set<int>> element;
+
+		element.first.emplace(4);
+		element.first.emplace(18);
+
+		element.second.emplace(12);
+
+		plumbing.push_back(element);
+	}
+	
+	{
+		std::pair<std::set<int>, std::set<int>> element;
+
+		element.first.emplace(8);
+
+		element.second.emplace(7);
+
+		plumbing.push_back(element);
+	}
+	
+	{
+		std::pair<std::set<int>, std::set<int>> element;
+
+		element.first.emplace(11);
+		element.first.emplace(24);
+
+		element.second.emplace(3);
+
+		plumbing.push_back(element);
+	}
+	
+	MLMSElement topElements[5] {
+		MLMSElement("0", Box, ' ', 5),
+		MLMSElement("", NoBox , '|', 1),
+		MLMSElement("2", Box, ' ', 3),
+		MLMSElement("3", Box, ' ', 7),
+		MLMSElement("4", Box, ' ', 2),
+	};
+
+	MLMSElement bottomElements[3] {
+		MLMSElement("5", Box, ' ', 4),
+		MLMSElement("", NoBox , '|', 1),
+		MLMSElement("7", Box, ' ', 7),
+	};
+
+	for(int i = 0; i < 3; i++) {
+		for(int j = 0; j < 5; j++) {
+			std::cout << topElements[j].GetLine(i);
+		}std::cout << std::endl;
+	}
+	std::cout << PlumbGeneration(plumbing) << std::endl;
+	for(int i = 0; i < 3; i++) {
+		for(int j = 0; j < 3; j++) {
+			std::cout << bottomElements[j].GetLine(i);
 		}std::cout << std::endl;
 	}
 
