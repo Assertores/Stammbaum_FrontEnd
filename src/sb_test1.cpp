@@ -9,6 +9,80 @@
 #include "frontend/MLMSElement.h"
 #include <csv_parser.hpp>
 
+cString IToS(int number) {
+	//int digits = ceil(log10(number));
+	size_t digits;
+	if(number >= 0 && number < 10)
+		digits = 1;
+	else if(number < 100)
+		digits = 2;
+	else if(number < 1000)
+		digits = 3;
+	else
+		digits = -1;
+
+	char* value = (char*)malloc(digits + 1);
+
+	if(value == NULL)
+		return "";
+
+	for(int i = digits; i > 0; i--) {
+		value[digits - i] = '0' + ((number / (int)pow(10, i - 1)) % 10);
+	}
+	value[digits] = '\0';
+
+	return value;
+}
+
+std::pair<std::set<blood>, std::set<relation>> FACEGetRelations() {
+	std::set<blood> relations;
+
+	relations.emplace(blood {0, 11, Father});
+	relations.emplace(blood {1, 11, Mother});
+	relations.emplace(blood {0, 2, Father});
+	relations.emplace(blood {1, 2, Mother});
+	relations.emplace(blood {0, 4, Father});
+	relations.emplace(blood {1, 4, Mother});
+	relations.emplace(blood {2, 9, Father});
+	relations.emplace(blood {3, 9, Mother});
+	relations.emplace(blood {4, 6, Father});
+	relations.emplace(blood {5, 6, Mother});
+	relations.emplace(blood {7, 8, Father});
+	relations.emplace(blood {6, 8, Mother});
+	relations.emplace(blood {9, 10, Father});
+	relations.emplace(blood {8, 10, Mother});
+	relations.emplace(blood {12, 13, Father});
+	relations.emplace(blood {11, 13, Mother});
+	relations.emplace(blood {14, 15, Father});
+	relations.emplace(blood {13, 15, Mother});
+	relations.emplace(blood {11, 16, Mother});
+	relations.emplace(blood {10, 16, Father});
+	relations.emplace(blood {15, 17, Father});
+	relations.emplace(blood {16, 17, Mother});
+
+	return std::pair<std::set<blood>, std::set<relation>>(relations, std::set<relation>());
+}
+
+std::pair<std::set<blood>, std::set<relation>> FACEGetRelations2() {
+	std::set<blood> relations;
+
+	relations.emplace(blood {0, 2, Father});
+	relations.emplace(blood {4, 2, Mother});
+	relations.emplace(blood {5, 3, Father});
+	relations.emplace(blood {1, 3, Mother});
+
+	return std::pair<std::set<blood>, std::set<relation>>(relations, std::set<relation>());
+}
+
+personInfos FACEGetPerson(const int personID) {
+	personInfos value;
+
+	value.firstNames.push_back("ID:");
+	value.lastNames.push_back(IToS(personID));
+
+	return value;
+}
+
 int main(void) {
 
 	//===== ===== Test Persons ===== =====
@@ -68,32 +142,7 @@ int main(void) {
 
 	//===== ===== Relations ===== =====
 
-	std::set<blood> relations;
-
-	relations.emplace(blood {0, 11, Father});
-	relations.emplace(blood {1, 11, Mother});
-	relations.emplace(blood {0, 2, Father});
-	relations.emplace(blood {1, 2, Mother});
-	relations.emplace(blood {0, 4, Father});
-	relations.emplace(blood {1, 4, Mother});
-	relations.emplace(blood {2, 9, Father});
-	relations.emplace(blood {3, 9, Mother});
-	relations.emplace(blood {4, 6, Father});
-	relations.emplace(blood {5, 6, Mother});
-	relations.emplace(blood {7, 8, Father});
-	relations.emplace(blood {6, 8, Mother});
-	relations.emplace(blood {9, 10, Father});
-	relations.emplace(blood {8, 10, Mother});
-	relations.emplace(blood {12, 13, Father});
-	relations.emplace(blood {11, 13, Mother});
-	relations.emplace(blood {14, 15, Father});
-	relations.emplace(blood {13, 15, Mother});
-	relations.emplace(blood {11, 16, Mother});
-	relations.emplace(blood {10, 16, Father});
-	relations.emplace(blood {15, 17, Father});
-	relations.emplace(blood {16, 17, Mother});
-
-	auto tree = CreateTree(relations);
+	auto tree = CreateTree(FACEGetRelations().first);
 	auto retVal = SortPersons(tree);
 
 	for(int i = 0; i < retVal.size(); i++) {
@@ -119,10 +168,12 @@ int main(void) {
 
 	std::cout << std::endl;
 
-	std::vector<std::pair<std::set<int>, std::set<int>>> plumbing;
-	
+	//===== ===== Plumbing ===== =====
+
+	std::vector<family> plumbing;
+
 	{
-		std::pair<std::set<int>, std::set<int>> element;
+		family element;
 
 		element.first.emplace(4);
 		element.first.emplace(18);
@@ -131,9 +182,9 @@ int main(void) {
 
 		plumbing.push_back(element);
 	}
-	
+
 	{
-		std::pair<std::set<int>, std::set<int>> element;
+		family element;
 
 		element.first.emplace(8);
 
@@ -141,9 +192,9 @@ int main(void) {
 
 		plumbing.push_back(element);
 	}
-	
+
 	{
-		std::pair<std::set<int>, std::set<int>> element;
+		family element;
 
 		element.first.emplace(11);
 		element.first.emplace(24);
@@ -152,7 +203,7 @@ int main(void) {
 
 		plumbing.push_back(element);
 	}
-	
+
 	MLMSElement topElements[5] {
 		MLMSElement("0", Box, ' ', 5),
 		MLMSElement("", NoBox , '|', 1),
@@ -178,6 +229,39 @@ int main(void) {
 			std::cout << bottomElements[j].GetLine(i);
 		}std::cout << std::endl;
 	}
+
+	std::cout << std::endl;
+
+	//===== ===== full Integration test ===== =====
+
+	auto relations = FACEGetRelations2();
+	auto smalTree = CreateTree(relations.first);
+	auto generations = SortPersons(smalTree);
+	auto families = CreatFamilies(smalTree);
+
+	std::vector<visGen> treePeopleVisualisator;
+	for(int i = 0; i < generations.size(); i++) {
+		visGen element;
+		for(auto& it : generations[i]) {
+			element.push_back(std::pair(it, MLMSElement(PersonToString(FACEGetPerson(it)/*, false*/), Box)));
+		}
+		treePeopleVisualisator.push_back(element);
+	}
+
+	auto generationPlummbings = CreatePlumbingInfos(families, treePeopleVisualisator);
+
+	for(int g = 0; g < treePeopleVisualisator.size(); g++) {
+		for(int j = 0; j < treePeopleVisualisator[g][0].second.GetLineCount(); j++) {
+			for(int i = 0; i < treePeopleVisualisator[g].size(); i++) {
+				std::cout << treePeopleVisualisator[g][i].second.GetLine(j);
+			}
+			std::cout << std::endl;
+		}
+		std::cout << PlumbGeneration(generationPlummbings[g]) << std::endl;
+	}
+	
+
+	
 
 	return 0;
 }
