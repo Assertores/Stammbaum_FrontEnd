@@ -20,14 +20,9 @@ void dataHandler::InitTables(const std::ifstream& peoples, const std::ifstream& 
 	InitRelationshipsTable(relationships);
 }
 
-std::set<blood> dataHandler::GetBloodLines(const int rootID/* = 0*/, const int dinst/* = -1*/){
+std::pair<std::set<blood>, std::set<relation>> dataHandler::GetRelations(const int rootID/* = 0*/, const int dinst/* = -1*/) {
 	assert(false && "not implimented");
-	return std::set<blood>();
-}
-
-std::set<relation> dataHandler::GetRelations(const int rootID/* = 0*/, const int dinst/* = -1*/) {
-	assert(false && "not implimented");
-	return std::set<relation>();
+	return std::pair<std::set<blood>, std::set<relation>>();
 }
 
 personInfos dataHandler::GetPerson(const int personID){
