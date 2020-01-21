@@ -1,14 +1,11 @@
 #pragma once
 
-//#include <fstream>
 #include <string>
 #include <string_view>
 #include <tuple>
 #include <iomanip>
 #include <sstream>
 #include <cassert>
-
-#include "../utility/types.h"
 
 namespace csv_parser {
 
@@ -34,70 +31,19 @@ namespace csv_parser {
 	}
 
 	template<>
-	std::string parse_entry(std::string_view string) {
-		return std::string{string};
-	}
+	std::string parse_entry(std::string_view string);
 
 	template<>
-	bool parse_entry(std::string_view string) {
-		if (string == "true") {
-			return true;
-		} else if (string == "false") {
-			return false;
-		}
-
-		assert(false && "bool entry is neither");
-	}
+	bool parse_entry(std::string_view string);
 
 	template<>
-	uint64_t parse_entry(std::string_view string) {
-		size_t pos = 0;
-		return stoll(std::string{string}, &pos);
-	}
+	uint64_t parse_entry(std::string_view string);
 
 	template<>
-	uint32_t parse_entry(std::string_view string) {
-		size_t pos = 0;
-		return stoll(std::string{string}, &pos);
-	}
+	uint32_t parse_entry(std::string_view string);
 
 	template<>
-	std::tm parse_entry(std::string_view string) {
-		std::istringstream ss{std::string{string}};
+	std::tm parse_entry(std::string_view string);
 
-		std::tm tm;
-
-		ss >> std::get_time(&tm, "%d.%m.%Y");
-
-		return tm;
-	}
-
-	template<>
-	relType parse_entry(std::string_view string) {
-		if(string == "Father") {
-			return Father;
-		} else if(string == "Mother") {
-			return Mother;
-		} else if(string == "FosterMother") {
-			return FosterMother;
-		} else if(string == "Married") {
-			return Married;
-		}
-
-		assert(false && "relation Type entry is neither");
-	}
-
-	template<>
-	sexType parse_entry(std::string_view string) {
-		if(string == "Male") {
-			return Male;
-		} else if(string == "Female") {
-			return Female;
-		} else if(string == "Deverce") {
-			return Deverce;
-		}
-
-		assert(false && "sex Type entry is neither");
-	}
-}
+} // csv_parser
 

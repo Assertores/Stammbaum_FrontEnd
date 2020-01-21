@@ -16,11 +16,11 @@ MLMSElement::MLMSElement(std::string element, Boxing boxType/* = NoBox*/, char c
 	//----- ----- end URL ----- -----
 
 	size = minSize;
-	for(int i = 0; i < lines.size(); i++) {
+	for(size_t i = 0; i < lines.size(); i++) {
 		size = (size > lines[i].length()) ? size : lines[i].length();
 	}
 
-	for(int i = 0; i < lines.size(); i++) {
+	for(size_t i = 0; i < lines.size(); i++) {
 		lines[i].append(size - lines[i].length(), clearChar);
 	}
 
@@ -33,7 +33,7 @@ MLMSElement::MLMSElement(std::string element, Boxing boxType/* = NoBox*/, char c
 	size += 2;
 	emptyLine.append(2, clearChar);
 
-	for(int i = 0; i < lines.size(); i++) {
+	for(size_t i = 0; i < lines.size(); i++) {
 		lines[i].insert(lines[i].begin(), '|'/*'│'*/);
 		lines[i].append("|"/*"│"*/);
 	}

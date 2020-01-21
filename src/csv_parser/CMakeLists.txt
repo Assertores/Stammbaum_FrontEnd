@@ -7,6 +7,8 @@ add_library(csv_parser
 
 target_compile_features(csv_parser PUBLIC cxx_std_17)
 
+target_include_directories(csv_parser PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
+
 ############################
 
 add_executable(csv_test

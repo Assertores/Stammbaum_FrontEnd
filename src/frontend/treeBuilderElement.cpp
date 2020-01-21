@@ -9,7 +9,7 @@ void treeBuilderElement::UpdateDown(int newHight, bool fromChild/* = false*/) {
 	if(number < newHight) {
 		number = newHight;
 
-		for(int i = 0; i < childrens.size(); i++) {
+		for(size_t i = 0; i < childrens.size(); i++) {
 			childrens[i]->UpdateDown(number + 1);
 		}
 	}
@@ -26,7 +26,7 @@ void treeBuilderElement::SquashUp() {
 
 	//alle Parents auf den höhesten wert setzen
 	int maxNumber = -1;
-	for(int i = 0; i < parents.size(); i++) {
+	for(size_t i = 0; i < parents.size(); i++) {
 		maxNumber = maxNumber > parents[i]->number ? maxNumber : parents[i]->number;
 	}
 #ifdef DB_TREE
@@ -34,7 +34,8 @@ void treeBuilderElement::SquashUp() {
 #endif
 
 	//Childrens von Parents updaten lassen
-	for(int i = 0; i < parents.size(); i++) {
+	for(size_t i = 0; i < parents.size(); i++) {
 		parents[i]->UpdateDown(maxNumber, true);
 	}
 }
+

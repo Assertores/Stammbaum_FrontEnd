@@ -6,7 +6,7 @@
 
 //===== ===== Intern ===== =====
 
-typedef char* cString;
+typedef const char* cString;
 
 enum relType {
 	Father,

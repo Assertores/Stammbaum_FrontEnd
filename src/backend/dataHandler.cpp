@@ -4,6 +4,9 @@
 //===== ===== Intern ===== =====
 #include "dataHandler.h"
 
+#include <csv_parser.hpp>
+#include "../utility/types_parser.hpp"
+
 void dataHandler::InitTables(const std::ifstream& peoples, const std::ifstream& titles, const std::ifstream& firstNames, const std::ifstream& lastNames, const std::ifstream& bloodLines, const std::ifstream& relationships) {
 	assert(!peoples.fail());
 	assert(!titles.fail());
@@ -53,3 +56,4 @@ void dataHandler::InitBloodLinesTable(const std::ifstream& peoples){
 void dataHandler::InitRelationshipsTable(const std::ifstream& peoples){
 	assert(false && "not implimented");
 }
+

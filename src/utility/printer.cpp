@@ -80,7 +80,7 @@ std::string PersonToString(const personInfos person, bool longVariant/* = true*/
 
 	if(person.titles.size() > 0) {
 		if(longVariant) {
-			for(int i = 0; i < person.titles.size(); i++) {
+			for(size_t i = 0; i < person.titles.size(); i++) {
 				value << person.titles[i] << " ";
 			}
 		} else {
@@ -97,7 +97,7 @@ std::string PersonToString(const personInfos person, bool longVariant/* = true*/
 			if(longVariant)
 				value << "(";
 
-			for(int i = 1; i < person.firstNames.size() - 1; i++) {
+			for(size_t i = 1; i < person.firstNames.size() - 1; i++) {
 				if(longVariant)
 					value << person.firstNames[i] << ", ";
 				else
@@ -119,7 +119,7 @@ std::string PersonToString(const personInfos person, bool longVariant/* = true*/
 	} else {
 		if(longVariant && person.lastNames.size() > 1) {
 			value << "(";
-			for(int i = 0; i < person.lastNames.size() - 2; i++) {
+			for(size_t i = 0; i < person.lastNames.size() - 2; i++) {
 				value << person.lastNames[i] << ", ";
 			}
 			value << person.lastNames[person.lastNames.size() - 2] << ") ";
@@ -175,7 +175,7 @@ std::string PlumbGeneration(std::vector<std::pair<std::set<int>, std::set<int>>>
 	std::pair<std::set<int>, std::set<int>> allCon; //all connections
 	int maxLength = -1;
 
-	for(int i = 0; i < families.size(); i++) {
+	for(size_t i = 0; i < families.size(); i++) {
 		for(auto& it : families[i].first) {
 			allCon.first.emplace(it);
 			maxLength = maxLength > it ? maxLength : it;
@@ -196,7 +196,7 @@ std::string PlumbGeneration(std::vector<std::pair<std::set<int>, std::set<int>>>
 	}
 	value.append(1, '\n');
 
-	for(int currentFamilie = 0; currentFamilie < families.size(); currentFamilie++) {
+	for(size_t currentFamilie = 0; currentFamilie < families.size(); currentFamilie++) {
 		int max = *(families[currentFamilie].first.rbegin());//families[currentFamilie].first.rbegin() > families[currentFamilie].second.rbegin() ? families[currentFamilie].first.rbegin() : families[currentFamilie].second.rbegin();
 		max = max > * (families[currentFamilie].second.rbegin()) ? max : *(families[currentFamilie].second.rbegin());
 		bool inFamilie = false;
