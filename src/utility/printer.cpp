@@ -114,7 +114,7 @@ std::string PersonToString(const personInfos person, bool longVariant/* = true*/
 	if(person.suffix != nullptr)
 		value << person.suffix << " ";
 
-	if(person.firstNames.size() <= 0) {
+	if(person.lastNames.size() <= 0) {
 		value << "NAN";
 	} else {
 		if(longVariant && person.lastNames.size() > 1) {
@@ -147,13 +147,12 @@ std::string PersonToString(const personInfos person, bool longVariant/* = true*/
 		value << "Death: " << person.death;
 		if(person.placeOfDeath != nullptr)
 			value << " at: " << person.placeOfDeath;
-		value << std::endl;
 	} else {
 		value << "+ " << person.death;
 	}
 
 	if(longVariant && person.remarks != nullptr)
-		value << "Remarks:" << std::endl << person.remarks;
+		value << std::endl << "Remarks:" << std::endl << person.remarks;
 
 	return value.str();
 }
