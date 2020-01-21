@@ -8,7 +8,7 @@
 #include "../utility/types.h"
 
 
-static class dataHandler{
+class dataHandler{
 public:
 	/// <summary>
 	/// initialices all tables at once. asserts all table files are opend
@@ -67,3 +67,4 @@ private:
 	/// </summary>
 	static void InitRelationshipsTable(const std::ifstream& peoples);
 };
+
