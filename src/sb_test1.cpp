@@ -93,13 +93,31 @@ int main(void) {
 	relations.emplace(blood {15, 17, Father});
 	relations.emplace(blood {16, 17, Mother});
 
-	auto retVal = SortPersons(relations);
+	auto tree = CreateTree(relations);
+	auto retVal = SortPersons(tree);
 
 	for(int i = 0; i < retVal.size(); i++) {
 		for(auto& it : retVal[i]) {
 			std::cout << it << ", ";
 		}std::cout << std::endl;
 	}
+	std::cout << std::endl;
+
+	auto retVal2 = CreatFamilies(tree);
+
+	for(int i = 0; i < retVal2.size(); i++) {
+		std::cout << "[";
+		for(auto& it : retVal2[i].first) {
+			std::cout << it << ", ";
+		}
+		std::cout << "][";
+		for(auto& it : retVal2[i].second) {
+			std::cout << it << ", ";
+		}
+		std::cout << "]" << std::endl;
+	}
+
+	std::cout << std::endl;
 
 	std::vector<std::pair<std::set<int>, std::set<int>>> plumbing;
 	
