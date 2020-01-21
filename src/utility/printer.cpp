@@ -2,20 +2,20 @@
 
 #include "printer.h"
 
-std::ostream& operator<<(std::ostream & os, const std::chrono::system_clock::time_point& time) {
+std::ostream& operator<<(std::ostream& os, const std::chrono::system_clock::time_point& time) {
 	std::time_t tt = std::chrono::system_clock::to_time_t(time);
 	return os << std::put_time(std::localtime(&tt), "%d.%m.%Y");
 }
 
 std::ostream& operator<<(std::ostream& os, const std::tm& time) {
 	if(time.tm_mon < 0 || time.tm_mon > 12 ||
-	   time.tm_yday < 0 || time.tm_yday > 358)
+	   time.tm_mday < 0 || time.tm_mday > 33)
 		return os << "Invalide Date";
 
 	return os << std::put_time(&time, "%d.%m.%Y");
 }
 
-cString relToString(relType t) {
+cString relToString(const relType t) {
 	switch(t) {
 	case Father:
 		return "Father";
@@ -30,7 +30,7 @@ cString relToString(relType t) {
 	}
 }
 
-char relToChar(relType t) {
+char relToChar(const relType t) {
 	switch(t) {
 	case Father:
 		return 'F';
@@ -45,7 +45,7 @@ char relToChar(relType t) {
 	}
 }
 
-cString sexToString(sexType t) {
+cString sexToString(const sexType t) {
 	switch(t) {
 	case Male:
 		return "Male";
@@ -58,7 +58,7 @@ cString sexToString(sexType t) {
 	}
 }
 
-char sexToChar(sexType t) {
+char sexToChar(const sexType t) {
 	switch(t) {
 	case Male:
 		return 'M'/*'♂'*/;
@@ -75,7 +75,7 @@ char sexToChar(sexType t) {
 //│Prof. Andreas E. F. von und zu Edmeier│
 //│   ♂ | * 20.01.2020 | + 20.01.2020    │
 //└──────────────────┬───────────────────┘
-std::string PersonToString(personInfos person, bool longVariant/* = true*/) {
+std::string PersonToString(const personInfos person, bool longVariant/* = true*/) {
 	std::stringstream value;
 
 	if(person.titles.size() > 0) {
@@ -158,6 +158,90 @@ std::string PersonToString(personInfos person, bool longVariant/* = true*/) {
 	return value.str();
 }
 
+inline bool IsAConnection(std::pair<std::set<int>, std::set<int>>& allConnections, int key) {
+	if(allConnections.first.find(key) != allConnections.first.end())
+		return true;
+	return allConnections.second.find(key) != allConnections.second.end();
+}
+
+inline bool IsConnectionUpper(std::pair<std::set<int>, std::set<int>>& allConnections, int key) {
+	return allConnections.first.find(key) != allConnections.first.end();
+}
+
+std::string PlumbGeneration(std::vector<std::pair<std::set<int>, std::set<int>>>& families) {
+	std::string value;
+
+	std::pair<std::set<int>, std::set<int>> prevfam; //previous families
+	std::pair<std::set<int>, std::set<int>> allCon; //all connections
+	int maxLength = -1;
+
+	for(int i = 0; i < families.size(); i++) {
+		for(auto& it : families[i].first) {
+			allCon.first.emplace(it);
+			maxLength = maxLength > it ? maxLength : it;
+		}
+
+		for(auto& it : families[i].second) {
+			allCon.second.emplace(it);
+			maxLength = maxLength > it ? maxLength : it;
+		}
+	}
+
+	//===== ===== drawing top spacing ===== =====
+	int lastPos = 0;
+	for(auto& it : allCon.first) {
+		value.append(it - lastPos - 1, ' ');
+		value.append(1, '|');
+		lastPos = it;
+	}
+	value.append(1, '\n');
+
+	for(int currentFamilie = 0; currentFamilie < families.size(); currentFamilie++) {
+		int max = *(families[currentFamilie].first.rbegin());//families[currentFamilie].first.rbegin() > families[currentFamilie].second.rbegin() ? families[currentFamilie].first.rbegin() : families[currentFamilie].second.rbegin();
+		max = max > * (families[currentFamilie].second.rbegin()) ? max : *(families[currentFamilie].second.rbegin());
+		bool inFamilie = false;
+
+		for(int i = 1; i <= maxLength; i++) {
+			if(IsAConnection(allCon, i)) {
+				if(IsAConnection(families[currentFamilie], i)) {
+					value.append(1, '+');
+					inFamilie = i < max;
+				} else {
+					if(IsConnectionUpper(allCon, i)) {
+						if(prevfam.first.find(i) != prevfam.first.end()) {
+							value.append(1, inFamilie ? '-' : ' ');
+						} else {
+							value.append(1, '|');
+						}
+					} else {
+						if(prevfam.second.find(i) != prevfam.second.end()) {
+							value.append(1, '|');
+						} else {
+							value.append(1, inFamilie ? '-' : ' ');
+						}
+					}
+				}
+			} else {
+				value.append(1, inFamilie ? '-' : ' ');
+			}
+		}
+		value.append(1, '\n');
+		prevfam.first.merge(families[currentFamilie].first);
+		prevfam.second.merge(families[currentFamilie].second);
+	}
+
+	//===== ===== drawing bottom spacing ===== =====
+	lastPos = 0;
+	for(auto& it : allCon.second) {
+		value.append(it - lastPos - 1, ' ');
+		value.append(1, '|');
+		lastPos = it;
+	}
+
+	return value;
+}
+
+
 // ┌───┐┌───┐
 // │ 0 ││ 1 │
 // └─┬─┘└─┬─┘
@@ -194,6 +278,15 @@ std::string PersonToString(personInfos person, bool longVariant/* = true*/) {
 // ┌─┴─┐
 // │17 │
 // └───┘
+
+//|      |||       |
+//+------+|+-------+
+//    |   |    |
+//    +---|----+
+//    |   +----+
+//    |        |
+//+------++-------+
+//|      ||       |
 
 // ┌─┴─┐ ┌─┴─┐ ┌─┴─┐ ┌─┴─┐
 // │   │ │   │ │   │ │   │
