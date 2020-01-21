@@ -18,7 +18,7 @@ enum Boxing {
 // Multy Line Mono Size Element
 class MLMSElement {
 public:
-	MLMSElement(std::string element, Boxing boxType = NoBox, unsigned int minSize = 0);
+	MLMSElement(std::string element, Boxing boxType = NoBox, char clearChar = ' ', unsigned int minSize = 0);
 
 	int GetSize();
 	int GetLineCount();

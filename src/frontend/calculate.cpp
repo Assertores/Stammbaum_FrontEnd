@@ -30,8 +30,7 @@ std::set<int> GetAllPersons(std::set<blood>& blds, std::set<relation>& rels) {
 	std::set<int> value;
 
 	value = GetAllPersons(blds);
-	auto tmp = GetAllPersons(rels);
-	value.insert(tmp.begin(), tmp.end());
+	value.merge(GetAllPersons(rels));
 
 	return value;
 }

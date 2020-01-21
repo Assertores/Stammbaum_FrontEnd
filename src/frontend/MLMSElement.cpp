@@ -1,6 +1,6 @@
 #include "MLMSElement.h"
 
-MLMSElement::MLMSElement(std::string element, Boxing boxType/* = NoBox*/, unsigned int minSize/* = 0*/) {
+MLMSElement::MLMSElement(std::string element, Boxing boxType/* = NoBox*/, char clearChar/* = ' '*/, unsigned int minSize/* = 0*/) {
 	//https://stackoverflow.com/questions/13172158/c-split-string-by-line
 
 	std::string::size_type pos = 0;
@@ -21,20 +21,17 @@ MLMSElement::MLMSElement(std::string element, Boxing boxType/* = NoBox*/, unsign
 	}
 
 	for(int i = 0; i < lines.size(); i++) {
-		for(int j = lines[i].length(); j < size; j++) {
-			lines[i].append(" ");
-		}
+		lines[i].append(size - lines[i].length(), clearChar);
 	}
 
 	emptyLine.clear();
-	for(int i = 0; i < size; i++)
-		emptyLine.append(" ");
+	emptyLine.append(size, clearChar);
 
 	if(boxType == NoBox)
 		return;
 
 	size += 2;
-	emptyLine.append("  ");
+	emptyLine.append(2, clearChar);
 
 	for(int i = 0; i < lines.size(); i++) {
 		lines[i].insert(lines[i].begin(), '|'/*'│'*/);
@@ -43,9 +40,7 @@ MLMSElement::MLMSElement(std::string element, Boxing boxType/* = NoBox*/, unsign
 	{
 		std::string upperLine;
 		upperLine.append("+"/*"┌"*/);
-		for(int i = 1; i < size - 1; i++) {
-			upperLine.append("-"/*"─"*/);
-		}
+		upperLine.append(size - 2, '-'/*"─"*/);
 		upperLine.append("+"/*"┐"*/);
 
 		lines.insert(lines.begin(), upperLine);
@@ -53,9 +48,7 @@ MLMSElement::MLMSElement(std::string element, Boxing boxType/* = NoBox*/, unsign
 	{
 		std::string lowerLine;
 		lowerLine.append("+"/*"└"*/);
-		for(int i = 1; i < size - 1; i++) {
-			lowerLine.append("-"/*"─"*/);
-		}
+		lowerLine.append(size - 2, '-'/*"─"*/);
 		lowerLine.append("+"/*"┘"*/);
 
 		lines.push_back(lowerLine);
