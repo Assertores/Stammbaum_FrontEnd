@@ -125,3 +125,41 @@ std::vector<family> CreatFamilies(tree& treePersons) {
 
 	return value;
 }
+
+std::vector<std::vector<family>> CreatePlumbingInfos(std::vector<family>& families, std::vector<visGen>& treePeopleVisualisator){
+	std::vector<std::vector<family>> generationPlummbings;
+
+	{//TODO: this for every generation
+		std::vector<family> thisGeneration;
+		for(int i = 0; i < families.size(); i++) {
+			family element;
+			for(auto& it : families[i].first) {
+				int connection = 0;
+				int j = 0;
+				for(; treePeopleVisualisator[0][j].first != it; j++) {
+					connection += treePeopleVisualisator[0][j].second.GetSize();
+				}
+				connection += treePeopleVisualisator[0][j].second.GetSize() / 2;//getConnection?
+
+				element.first.emplace(connection);
+			}
+
+			for(auto& it : families[i].second) {
+				int connection = 0;
+				int j = 0;
+				for(; treePeopleVisualisator[1][j].first != it; j++) {
+					connection += treePeopleVisualisator[1][j].second.GetSize();
+				}
+				connection += treePeopleVisualisator[1][j].second.GetSize() / 2 + 1;//TODO: check for overlaps
+
+				element.second.emplace(connection);
+			}
+
+			thisGeneration.push_back(element);
+		}
+		generationPlummbings.push_back(thisGeneration);
+	}
+	generationPlummbings.push_back(std::vector<family>());//to be consistant with generation count
+
+	return generationPlummbings;
+}

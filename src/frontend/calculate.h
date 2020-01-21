@@ -18,3 +18,5 @@ tree CreateTree(std::set<blood>& rels);
 peoples SortPersons(tree& treePersons);
 
 std::vector<family> CreatFamilies(tree& treePersons);
+
+std::vector<std::vector<family>> CreatePlumbingInfos(std::vector<family>& families, std::vector<visGen>& treePeopleVisualisator);
