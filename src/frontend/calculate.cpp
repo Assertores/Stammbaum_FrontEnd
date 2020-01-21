@@ -31,7 +31,7 @@ std::set<int> GetAllPersons(std::set<blood>& blds, std::set<relation>& rels) {
 	return value;
 }
 
-std::map<int, treeBuilderElement> CreateTree(std::set<blood>& rels) {
+tree CreateTree(std::set<blood>& rels) {
 	std::map<int, treeBuilderElement> treePersons;
 
 	{
@@ -51,8 +51,8 @@ std::map<int, treeBuilderElement> CreateTree(std::set<blood>& rels) {
 	return treePersons;
 }
 
-std::vector<std::set<int>> SortPersons(std::map<int, treeBuilderElement>& treePersons) {
-	std::vector<std::set<int>> value;
+peoples SortPersons(tree& treePersons) {
+	peoples value;
 
 
 	for(auto& it : treePersons) {
@@ -78,8 +78,8 @@ std::vector<std::set<int>> SortPersons(std::map<int, treeBuilderElement>& treePe
 	return value;
 }
 
-std::vector<std::pair<std::set<int>, std::set<int>>> CreatFamilies(std::map<int, treeBuilderElement>& treePersons) {
-	std::vector<std::pair<std::set<int>, std::set<int>>> value;
+std::vector<family> CreatFamilies(tree& treePersons) {
+	std::vector<family> value;
 
 	std::set<int> childrenToCheck;
 	for(auto& it : treePersons) {
@@ -94,7 +94,7 @@ std::vector<std::pair<std::set<int>, std::set<int>>> CreatFamilies(std::map<int,
 			continue;
 		}
 
-		std::pair<std::set<int>, std::set<int>> element;
+		family element;
 
 		for(int i = 0; i < treePersons[current].parents.size(); i++) {
 			element.first.emplace(treePersons[current].parents[i]->id);
