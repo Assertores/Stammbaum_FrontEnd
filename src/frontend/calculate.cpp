@@ -51,8 +51,8 @@ tree CreateTree(std::set<blood>& rels) {
 	return treePersons;
 }
 
-peoples SortPersons(tree& treePersons) {
-	peoples value;
+generations SortPersons(tree& treePersons) {
+	generations value;
 
 
 	for(auto& it : treePersons) {
@@ -126,40 +126,71 @@ std::vector<family> CreatFamilies(tree& treePersons) {
 	return value;
 }
 
-std::vector<std::vector<family>> CreatePlumbingInfos(std::vector<family>& families, std::vector<visGen>& treePeopleVisualisator){
-	std::vector<std::vector<family>> generationPlummbings;
+std::pair<std::vector<std::vector<family>>, generations> SplitFamilysToGenerations(std::vector<family>& families, generations& peoples) {
+	std::vector<std::vector<family>> value;
+	generations additionalPeoples;
 
-	{//TODO: this for every generation
-		std::vector<family> thisGeneration;
-		for(int i = 0; i < families.size(); i++) {
-			family element;
-			for(auto& it : families[i].first) {
-				int connection = 0;
-				int j = 0;
-				for(; treePeopleVisualisator[0][j].first != it; j++) {
-					connection += treePeopleVisualisator[0][j].second.GetSize();
-				}
-				connection += treePeopleVisualisator[0][j].second.GetSize() / 2;//getConnection?
-
-				element.first.emplace(connection);
-			}
-
-			for(auto& it : families[i].second) {
-				int connection = 0;
-				int j = 0;
-				for(; treePeopleVisualisator[1][j].first != it; j++) {
-					connection += treePeopleVisualisator[1][j].second.GetSize();
-				}
-				connection += treePeopleVisualisator[1][j].second.GetSize() / 2 + 1;//TODO: check for overlaps
-
-				element.second.emplace(connection);
-			}
-
-			thisGeneration.push_back(element);
-		}
-		generationPlummbings.push_back(thisGeneration);
+	additionalPeoples.push_back(std::set<int>());
+	for(int i = 1; i < peoples.size(); i++) {
+		value.push_back(std::vector<family>());
+		additionalPeoples.push_back(std::set<int>());
 	}
-	generationPlummbings.push_back(std::vector<family>());//to be consistant with generation count
 
-	return generationPlummbings;
+	for(int i = 0; i < families.size(); i++) {
+		int parent = *(families[i].first.begin());
+		for(int j = 0; j < peoples.size(); j++) {
+			if(peoples[j].find(parent) != peoples[j].end()) {
+				value[j].push_back(families[i]);
+				for(auto& it : families[i].second) {
+					family element;
+					element.first.emplace(it);
+					element.second.emplace(it);
+					for(int serchGen = j + 1; serchGen < peoples.size() && peoples[serchGen].find(it) == peoples[serchGen].end(); serchGen++) {
+						additionalPeoples[serchGen].emplace(it);
+						value[serchGen].push_back(element);
+					}
+				}
+				break;
+			}
+		}
+	}
+
+	return std::pair<std::vector<std::vector<family>>, generations>(value, additionalPeoples);
+}
+
+std::vector<family> CreatePlumbingInfos(std::vector<family>& families, visGen& upperGeneration, visGen& lowerGeneration) {
+
+	std::vector<family> thisGeneration;
+	for(int i = 0; i < families.size(); i++) {
+		family element;
+		for(auto& it : families[i].first) {
+			int connection = 0;
+			int j = 0;
+			for(; upperGeneration[j].first != it; j++) {
+				connection += upperGeneration[j].second.GetSize();
+			}
+			connection += upperGeneration[j].second.GetSize() / 2;//getConnection?
+			if(upperGeneration[j].second.GetSize() <= 1)
+				connection++;
+
+			element.first.emplace(connection);
+		}
+
+		for(auto& it : families[i].second) {
+			int connection = 0;
+			int j = 0;
+			for(; lowerGeneration[j].first != it; j++) {
+				connection += lowerGeneration[j].second.GetSize();
+			}
+			connection += lowerGeneration[j].second.GetSize() / 2;//TODO: check for overlaps
+			//if(lowerGeneration[j].second.GetSize() > 1)
+				connection++;
+
+			element.second.emplace(connection);
+		}
+
+		thisGeneration.push_back(element);
+	}
+
+	return thisGeneration;
 }

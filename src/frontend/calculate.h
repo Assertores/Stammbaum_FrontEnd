@@ -15,8 +15,10 @@ std::set<int> GetAllPersons(std::set<blood>& blds, std::set<relation>& rels);
 
 tree CreateTree(std::set<blood>& rels);
 
-peoples SortPersons(tree& treePersons);
+generations SortPersons(tree& treePersons);
 
 std::vector<family> CreatFamilies(tree& treePersons);
 
-std::vector<std::vector<family>> CreatePlumbingInfos(std::vector<family>& families, std::vector<visGen>& treePeopleVisualisator);
+std::pair<std::vector<std::vector<family>>, generations> SplitFamilysToGenerations(std::vector<family>& families, generations& peoples);
+
+std::vector<family> CreatePlumbingInfos(std::vector<family>& families, visGen& upperGeneration, visGen& lowerGeneration);
