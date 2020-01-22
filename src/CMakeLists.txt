@@ -20,8 +20,8 @@ add_executable(sb_test1
 	frontend/MLMSElement.h
 	frontend/MLMSElement.cpp
 
-	sb_test1.cpp
-	#mainCLI.cpp
+	#sb_test1.cpp
+	mainCLI.cpp
 )
 
 target_link_libraries(sb_test1 PRIVATE csv_parser)
