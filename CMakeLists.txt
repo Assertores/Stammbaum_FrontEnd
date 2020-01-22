@@ -25,4 +25,3 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
 add_subdirectory(./src)
 
-target_compile_features(sb_test1 PUBLIC cxx_std_17)
