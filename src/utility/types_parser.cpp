@@ -29,8 +29,8 @@ namespace csv_parser {
 		} else if(string == "Female" ||
 				  string == "female") {
 			return Female;
-		} else if(string == "Deverce" ||
-				  string == "deverce") {
+		} else if(string == "Diverse" ||
+				  string == "diverse") {
 			return Deverce;
 		}
 
