@@ -1,6 +1,6 @@
 #include "calculate.h"
 
-std::set<int> GetAllPersons(std::set<relation>& rels) {
+std::set<int> GetAllPersons(const std::set<relation>& rels) {
 	std::set<int> value;
 
 	for(auto& it : rels) {
@@ -11,7 +11,7 @@ std::set<int> GetAllPersons(std::set<relation>& rels) {
 	return value;
 }
 
-std::set<int> GetAllPersons(std::set<blood>& blds) {
+std::set<int> GetAllPersons(const std::set<blood>& blds) {
 	std::set<int> value;
 
 	for(auto& it : blds) {
@@ -22,7 +22,7 @@ std::set<int> GetAllPersons(std::set<blood>& blds) {
 	return value;
 }
 
-std::set<int> GetAllPersons(std::set<blood>& blds, std::set<relation>& rels) {
+std::set<int> GetAllPersons(const std::set<blood>& blds, const std::set<relation>& rels) {
 	std::set<int> value;
 
 	value = GetAllPersons(blds);
@@ -31,7 +31,7 @@ std::set<int> GetAllPersons(std::set<blood>& blds, std::set<relation>& rels) {
 	return value;
 }
 
-tree CreateTree(std::set<blood>& rels) {
+tree CreateTree(const std::set<blood>& rels) {
 	std::map<int, treeBuilderElement> treePersons;
 
 	{

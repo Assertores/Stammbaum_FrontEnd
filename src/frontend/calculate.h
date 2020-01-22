@@ -7,13 +7,13 @@
 //===== ===== Intern ===== =====
 #include "../utility/types.h"
 
-std::set<int> GetAllPersons(std::set<relation>& rels);
+std::set<int> GetAllPersons(const std::set<relation>& rels);
 
-std::set<int> GetAllPersons(std::set<blood>& blds);
+std::set<int> GetAllPersons(const std::set<blood>& blds);
 
-std::set<int> GetAllPersons(std::set<blood>& blds, std::set<relation>& rels);
+std::set<int> GetAllPersons(const std::set<blood>& blds, const std::set<relation>& rels);
 
-tree CreateTree(std::set<blood>& rels);
+tree CreateTree(const std::set<blood>& rels);
 
 generations SortPersons(tree& treePersons);
 

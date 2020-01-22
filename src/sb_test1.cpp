@@ -2,6 +2,7 @@
 #include <vector>
 #include <chrono>
 #include <set>
+#include <cmath>
 
 #include "utility/types.h"
 #include "utility/printer.h"
