@@ -2,44 +2,44 @@
 
 #include "types.h"
 
-cString ERROR_ARGUMENTCOUNT = "you have to pass exagtly one argument";
-cString FILE_PEOPLES = "/People.csv";
-cString ERROR_PEOPLES = "no People.csv file found";
-cString FILE_TITLES ="/Titles.csv";
-cString ERROR_TITLES = "no Titles.csv file found";
-cString FILE_FIRSTNAMES = "/FirstNames.csv";
-cString ERROR_FIRSTNAMES = "no FirstNames.csv file found";
-cString FILE_LASTNAMES = "/LastNames.csv";
-cString ERROR_LASTNAMES = "no LastNames.csv file found";
-cString FILE_BLOODLINES = "/Bloodline.csv";
-cString ERROR_BLOODLINES = "no Bloodline.csv file found";
-cString FILE_RELATIONSHIPS = "/Relationships.csv";
-cString ERROR_RELATIONSHIPS = "no Relationships.csv file found";
+#define ERROR_ARGUMENTCOUNT	"you have to pass exagtly one argument"
+#define FILE_PEOPLES		"/People.csv"
+#define ERROR_PEOPLES		"no People.csv file found"
+#define FILE_TITLES			"/Titles.csv"
+#define ERROR_TITLES		"no Titles.csv file found"
+#define FILE_FIRSTNAMES		"/FirstNames.csv"
+#define ERROR_FIRSTNAMES	"no FirstNames.csv file found"
+#define FILE_LASTNAMES		"/LastNames.csv"
+#define ERROR_LASTNAMES		"no LastNames.csv file found"
+#define FILE_BLOODLINES		"/Bloodline.csv"
+#define ERROR_BLOODLINES	"no Bloodline.csv file found"
+#define FILE_RELATIONSHIPS	"/Relationships.csv"
+#define ERROR_RELATIONSHIPS	"no Relationships.csv file found"
 
-cString INPUTREQUEST = "Please input Person ID and distance: ";
-cString FAILEDINPUT = "your input Was denyed please try again: ";
+#define INPUTREQUEST		"Please input Person ID and distance: "
+#define FAILEDINPUT			"your input Was denied please try again: "
 
-cString COMMAND_EXIT = "exit";
-cString COMMAND_SEXIT = "e";
-cString COMMAND_QUIT = "quit";
-cString COMMAND_SQUIT = "q";
-cString COMMAND_HELP = "help";
-cString COMMAND_SHELP = "h";
-cString COMMAND_TREE = "tree";
-cString COMMAND_PERSON = "person";
+#define COMMAND_EXIT		"exit"
+#define COMMAND_SEXIT		"e"
+#define COMMAND_QUIT		"quit"
+#define COMMAND_SQUIT		"q"
+#define COMMAND_HELP		"help"
+#define COMMAND_SHELP		"h"
+#define COMMAND_TREE		"tree"
+#define COMMAND_PERSON		"person"
 
-cString HELP_QUIT =
-"quits the programm.";
-cString HELP_TREE =
-"syntax: \"tree [id] [distance]\" | prints the family tree from the person [id] onto the console";
-cString HELP_PERSON =
-"syntax: \"person [id]\"          | prints all information to a person";
-cString HELP_HELP =
-"syntax: \"help [command]\"       | prints the help to the [command]\n"
-"\"help\", \"h\"                    | prints this help\n"
-"\"exit\", \"e\", \"quit\", \"q\"       | quits the programm\n"
-"\"tree\"                         | returns a tree\n"
+#define HELP_QUIT \
+"quits the programm."
+#define HELP_TREE \
+"syntax: \"tree [id] [distance]\" | prints the family tree from the person [id] onto the console"
+#define HELP_PERSON \
+"syntax: \"person [id]\"          | prints all information to a person"
+#define HELP_HELP \
+"syntax: \"help [command]\"       | prints the help to the [command]\n"\
+"\"help\", \"h\"                    | prints this help\n"\
+"\"exit\", \"e\", \"quit\", \"q\"       | quits the programm\n"\
+"\"tree\"                         | returns a tree\n"\
 "\"person\"                       | returns a person"
-;
 
-cString COM_NOT_FOUND = "command not found type \"help\" for more informations.";
+#define COM_NOT_FOUND		"command not found type \"help\" for more informations."
+
