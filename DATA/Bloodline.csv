@@ -1,0 +1,23 @@
+PERSON_ID1,PERSON_ID2,CONFIDENTIAL,TYPE
+0,11,father
+1,11,mother
+0,2,father
+1,2,mother
+0,4,father
+1,4,mother
+2,9,father
+3,9,mother
+4,6,father
+5,6,mother
+7,8,father
+6,8,mother
+9,10,father
+8,10,mother
+12,13,father
+11,13,mother
+14,15,father
+13,15,mother
+11,16,mother
+10,16,father
+15, 7,father
+16,17,mother

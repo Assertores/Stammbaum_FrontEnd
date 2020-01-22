@@ -1,0 +1,19 @@
+ID,CONFIDENTIAL,NAME_SUFFIX,SEX,BIRTHDAY,PLACE_OF_BIRTH,DEATH,PLACE_OF_DEATH,REMARKS
+0,false,,male,01.01.1996,PlaceA,11.11.2021,PlaceB,RemarkA
+1,false,von,male,01.01.1996,PlaceA,11.11.2021,PlaceB,RemarkA
+2,false,zu,male,01.01.1996,PlaceA,11.11.2021,PlaceB,RemarkA
+3,false,sir,male,01.01.1996,PlaceA,11.11.2021,PlaceB,RemarkA
+4,false,von und zu,male,01.01.1996,PlaceA,11.11.2021,PlaceB,RemarkA
+5,false,,male,01.01.1996,PlaceA,11.11.2021,PlaceB,RemarkA
+6,false,,male,01.01.1996,PlaceA,11.11.2021,PlaceB,RemarkA
+7,false,,male,01.01.1996,PlaceA,11.11.2021,PlaceB,RemarkA
+8,false,,male,01.01.1996,PlaceA,11.11.2021,PlaceB,RemarkA
+9,false,,male,01.01.1996,PlaceA,11.11.2021,PlaceB,RemarkA
+10,false,,male,01.01.1996,PlaceA,11.11.2021,PlaceB,RemarkA
+11,false,,male,01.01.1996,PlaceA,11.11.2021,PlaceB,RemarkA
+12,false,,male,01.01.1996,PlaceA,11.11.2021,PlaceB,RemarkA
+13,false,,male,01.01.1996,PlaceA,11.11.2021,PlaceB,RemarkA
+14,false,,male,01.01.1996,PlaceA,11.11.2021,PlaceB,RemarkA
+15,false,,male,01.01.1996,PlaceA,11.11.2021,PlaceB,RemarkA
+16,false,,male,01.01.1996,PlaceA,11.11.2021,PlaceB,RemarkA
+17,false,,male,01.01.1996,PlaceA,11.11.2021,PlaceB,RemarkA
