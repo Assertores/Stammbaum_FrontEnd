@@ -243,7 +243,7 @@ int main(void) {
 	for(int i = 0; i < generations.size(); i++) {
 		visGen element;
 		for(auto& it : generations[i]) {
-			element.push_back(std::pair(it, MLMSElement(PersonToString(FACEGetPerson(it)/*, false*/), Box)));
+			element.push_back(std::pair(it, MLMSElement(PersonToString(FACEGetPerson(it), false), Box)));
 		}
 		treePeopleVisualisator.push_back(element);
 	}
