@@ -7,6 +7,8 @@
 #include "utility/printer.h"
 #include "utility/stringCollection.h"
 #include "backend/dataHandler.h"
+#include "frontend/calculate.h"
+#include "frontend/MLMSElement.h"
 
 void InputQuary(int* id, int* dist);
 
@@ -76,15 +78,50 @@ int main(int argc, cString argv[]) {
 		InputQuary(&id, &dist);
 
 		//----- ----- logic ----- -----
-		auto bloods = dataHandler::GetBloodLines(id, dist);
-		auto rels = dataHandler::GetRelations(id, dist);
 
-		std::set<int> peoplesToDraw = GetAllPersons(bloods, rels);
+		auto relations = dataHandler::GetRelations(id, dist);//call to Interface
+		auto smalTree = CreateTree(relations.first);
+		auto generations = SortPersons(smalTree);
+		auto families = CreatFamilies(smalTree);
+
+		std::vector<visGen> treePeopleVisualisator;
+		for(int i = 0; i < generations.size(); i++) {
+			visGen element;
+			for(auto& it : generations[i]) {
+				element.push_back(std::pair(it, MLMSElement(PersonToString(dataHandler::GetPerson(it), false), Box)));//call to Interface
+			}
+			treePeopleVisualisator.push_back(element);
+		}
+
+
+		auto generationFamilys = SplitFamilysToGenerations(families, generations);
+		for(int i = 0; i < generationFamilys.second.size(); i++) {
+			for(auto& it : generationFamilys.second[i]) {
+				treePeopleVisualisator[i].push_back(std::pair<int, MLMSElement>(it, MLMSElement("", NoBox, '|', 1)));
+			}
+		}
+
+		std::vector<std::vector<family>> generationPlummbings;
+		for(int i = 0; i < generationFamilys.first.size(); i++) {
+			generationPlummbings.push_back(CreatePlumbingInfos(generationFamilys.first[i], treePeopleVisualisator[i], treePeopleVisualisator[i + 1]));
+		}
+		generationPlummbings.push_back(std::vector<family>());
 
 		//----- ----- rendering ----- -----
 
-		for(auto& it : peoplesToDraw) {
-			std::cout << PersonToString(dataHandler::GetPerson(it)) << std::endl;
+		for(int g = 0; g < treePeopleVisualisator.size(); g++) {
+			int maxLineCount = 0;
+			for(int i = 0; i < treePeopleVisualisator[g].size(); i++) {
+				int newLineCount = treePeopleVisualisator[g][i].second.GetLineCount();
+				maxLineCount = maxLineCount > newLineCount ? maxLineCount : newLineCount;
+			}
+			for(int j = 0; j < maxLineCount; j++) {
+				for(int i = 0; i < treePeopleVisualisator[g].size(); i++) {
+					std::cout << treePeopleVisualisator[g][i].second.GetLine(j);
+				}
+				std::cout << std::endl;
+			}
+			std::cout << PlumbGeneration(generationPlummbings[g]) << std::endl;
 		}
 	}
 
