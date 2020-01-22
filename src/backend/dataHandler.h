@@ -12,7 +12,7 @@ namespace dataHandler {
 	/// <summary>
 	/// initialices all tables at once. asserts all table files are opend
 	/// </summary>
-	void InitTables(const std::ifstream& peoples, const std::ifstream& titles, const std::ifstream& firstNames, const std::ifstream& lastNames, const std::ifstream& bloodLines, const std::ifstream& relationships);
+	void InitTables(std::ifstream& peoples, std::ifstream& titles, std::ifstream& firstNames, std::ifstream& lastNames, std::ifstream& bloodLines, std::ifstream& relationships);
 
 	/// <summary>
 	/// retreave a subtree of the data. retreaves the whole tree or even multiple trees.
