@@ -29,7 +29,7 @@
 #define COMMAND_PERSON		"person"
 
 #define HELP_QUIT \
-"quits the programm."
+"syntax: \"exit\", \"e\", \"quit\", \"q\" | quits the programm."
 #define HELP_TREE \
 "syntax: \"tree [id] [distance]\" | prints the family tree from the person [id] onto the console"
 #define HELP_PERSON \
@@ -42,4 +42,5 @@
 "\"person\"                       | returns a person"
 
 #define COM_NOT_FOUND		"command not found type \"help\" for more informations."
+#define NOT_ENOUGH_PARAMETER	"not enough parameter"
 

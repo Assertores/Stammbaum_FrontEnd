@@ -141,6 +141,11 @@ int main(int argc, cString argv[]) {
 }
 
 void ExecuteTree(std::vector<std::string>& input) {
+	if(input.size() < 3) {
+		std::cout << NOT_ENOUGH_PARAMETER << std::endl;
+		return;
+	}
+
 	//----- ----- input ----- -----
 
 	int id;
@@ -198,6 +203,11 @@ void ExecuteTree(std::vector<std::string>& input) {
 }
 
 void ExecutePerson(std::vector<std::string>& input) {
+	if(input.size() < 2) {
+		std::cout << NOT_ENOUGH_PARAMETER << std::endl;
+		return;
+	}
+
 	//----- ----- input ----- -----
 
 	int id = stoi(input[1]);
