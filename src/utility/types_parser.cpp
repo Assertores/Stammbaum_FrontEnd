@@ -4,13 +4,17 @@ namespace csv_parser {
 
 	template<>
 	relType parse_entry(std::string_view string) {
-		if(string == "Father") {
+		if(string == "Father" ||
+		   string == "father") {
 			return Father;
-		} else if(string == "Mother") {
+		} else if(string == "Mother" ||
+				  string == "mother") {
 			return Mother;
-		} else if(string == "FosterMother") {
+		} else if(string == "FosterMother" ||
+				  string == "fosterMother") {
 			return FosterMother;
-		} else if(string == "Married") {
+		} else if(string == "Married" ||
+				  string == "married") {
 			return Married;
 		}
 
@@ -19,11 +23,14 @@ namespace csv_parser {
 
 	template<>
 	sexType parse_entry(std::string_view string) {
-		if(string == "Male") {
+		if(string == "Male" ||
+		   string == "male") {
 			return Male;
-		} else if(string == "Female") {
+		} else if(string == "Female" ||
+				  string == "female") {
 			return Female;
-		} else if(string == "Deverce") {
+		} else if(string == "Deverce" ||
+				  string == "deverce") {
 			return Deverce;
 		}
 
