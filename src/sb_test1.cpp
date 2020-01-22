@@ -234,7 +234,7 @@ int main(void) {
 
 	//===== ===== full Integration test ===== =====
 
-	auto relations = FACEGetRelations2();
+	auto relations = FACEGetRelations();
 	auto smalTree = CreateTree(relations.first);
 	auto generations = SortPersons(smalTree);
 	auto families = CreatFamilies(smalTree);
@@ -248,10 +248,27 @@ int main(void) {
 		treePeopleVisualisator.push_back(element);
 	}
 
-	auto generationPlummbings = CreatePlumbingInfos(families, treePeopleVisualisator);
+
+	auto generationFamilys = SplitFamilysToGenerations(families, generations);
+	for(int i = 0; i < generationFamilys.second.size(); i++) {
+		for(auto& it : generationFamilys.second[i]) {
+			treePeopleVisualisator[i].push_back(std::pair<int, MLMSElement>(it, MLMSElement("", NoBox, '|', 1)));
+		}
+	}
+
+	std::vector<std::vector<family>> generationPlummbings;
+	for(int i = 0; i < generationFamilys.first.size(); i++) {
+		generationPlummbings.push_back(CreatePlumbingInfos(generationFamilys.first[i], treePeopleVisualisator[i], treePeopleVisualisator[i + 1]));
+	}
+	generationPlummbings.push_back(std::vector<family>());
 
 	for(int g = 0; g < treePeopleVisualisator.size(); g++) {
-		for(int j = 0; j < treePeopleVisualisator[g][0].second.GetLineCount(); j++) {
+		int maxLineCount = 0;
+		for(int i = 0; i < treePeopleVisualisator[g].size(); i++) {
+			int newLineCount = treePeopleVisualisator[g][i].second.GetLineCount();
+			maxLineCount = maxLineCount > newLineCount ? maxLineCount : newLineCount;
+		}
+		for(int j = 0; j < maxLineCount; j++) {
 			for(int i = 0; i < treePeopleVisualisator[g].size(); i++) {
 				std::cout << treePeopleVisualisator[g][i].second.GetLine(j);
 			}
@@ -259,9 +276,6 @@ int main(void) {
 		}
 		std::cout << PlumbGeneration(generationPlummbings[g]) << std::endl;
 	}
-	
-
-	
 
 	return 0;
 }
