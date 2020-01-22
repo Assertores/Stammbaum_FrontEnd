@@ -10,10 +10,10 @@
 #include "frontend/calculate.h"
 #include "frontend/MLMSElement.h"
 
-void InputQuary(int* id, int* dist);
+void ExecuteTree(std::vector<std::string>& input);
+void ExecutePerson(std::vector<std::string>& input);
 
 int main(int argc, cString argv[]) {
-
 	//===== ===== Init ===== =====
 
 	if(2 != argc) {
@@ -69,64 +69,67 @@ int main(int argc, cString argv[]) {
 
 	//===== ===== Programm Loop ===== =====
 
-	int id;
-	int dist;
-
 	bool exit = false;
+	std::string inputBuffer;
+	std::vector<std::string> input;
+
 	while(!exit) {
 		//----- ----- input ----- -----
-		InputQuary(&id, &dist);
+		input.clear();
 
-		//----- ----- logic ----- -----
-
-		auto relations = dataHandler::GetRelations(id, dist);//call to Interface
-		auto smalTree = CreateTree(relations.first);
-		auto generations = SortPersons(smalTree);
-		auto families = CreatFamilies(smalTree);
-
-		std::vector<visGen> treePeopleVisualisator;
-		for(int i = 0; i < generations.size(); i++) {
-			visGen element;
-			for(auto& it : generations[i]) {
-				element.push_back(std::pair(it, MLMSElement(PersonToString(dataHandler::GetPerson(it), false), Box)));//call to Interface
-			}
-			treePeopleVisualisator.push_back(element);
+		std::cout << "> ";
+		std::getline(std::cin, inputBuffer);
+		std::istringstream tmp(inputBuffer);
+		inputBuffer.clear();
+		while(tmp.good()) {
+			tmp >> inputBuffer;
+			input.push_back(inputBuffer);
 		}
 
+#ifdef _WIN32
+		system("cls");
+#else
+		system("clear");
+#endif
 
-		auto generationFamilys = SplitFamilysToGenerations(families, generations);
-		for(int i = 0; i < generationFamilys.second.size(); i++) {
-			for(auto& it : generationFamilys.second[i]) {
-				treePeopleVisualisator[i].push_back(std::pair<int, MLMSElement>(it, MLMSElement("", NoBox, '|', 1)));
-			}
+		//----- ----- Logic and Rendering ----- -----
+
+		if(input.size() <= 0) {
+			std::cout << HELP_HELP << std::endl;
+			continue;
 		}
-
-		std::vector<std::vector<family>> generationPlummbings;
-		for(int i = 0; i < generationFamilys.first.size(); i++) {
-			generationPlummbings.push_back(CreatePlumbingInfos(generationFamilys.first[i], treePeopleVisualisator[i], treePeopleVisualisator[i + 1]));
-		}
-		generationPlummbings.push_back(std::vector<family>());
-
-		//----- ----- rendering ----- -----
-
-		for(int g = 0; g < treePeopleVisualisator.size(); g++) {
-			int maxLineCount = 0;
-			for(int i = 0; i < treePeopleVisualisator[g].size(); i++) {
-				int newLineCount = treePeopleVisualisator[g][i].second.GetLineCount();
-				maxLineCount = maxLineCount > newLineCount ? maxLineCount : newLineCount;
+		if(input[0] == COMMAND_EXIT ||
+		   input[0] == COMMAND_SEXIT ||
+		   input[0] == COMMAND_QUIT ||
+		   input[0] == COMMAND_SQUIT) {
+			exit = true;
+		} else if(input[0] == COMMAND_HELP ||
+				  input[0] == COMMAND_SHELP) {
+			if(input.size() <= 1) {
+				std::cout << HELP_HELP << std::endl;
+			} else if(input[1] == COMMAND_EXIT ||
+					  input[1] == COMMAND_SEXIT ||
+					  input[1] == COMMAND_QUIT ||
+					  input[1] == COMMAND_SQUIT) {
+				std::cout << HELP_QUIT << std::endl;
+			} else if(input[1] == COMMAND_TREE) {
+				std::cout << HELP_TREE << std::endl;
+			} else if(input[1] == COMMAND_PERSON) {
+				std::cout << HELP_PERSON << std::endl;
+			} else {
+				std::cout << HELP_HELP << std::endl;
 			}
-			for(int j = 0; j < maxLineCount; j++) {
-				for(int i = 0; i < treePeopleVisualisator[g].size(); i++) {
-					std::cout << treePeopleVisualisator[g][i].second.GetLine(j);
-				}
-				std::cout << std::endl;
-			}
-			std::cout << PlumbGeneration(generationPlummbings[g]) << std::endl;
+		
+		} else if(input[0] == COMMAND_TREE) {
+			ExecuteTree(input);
+		} else if(input[0] == COMMAND_PERSON) {
+			ExecutePerson(input);
+		} else {
+			std::cout << COM_NOT_FOUND << std::endl;
 		}
 	}
 
 	//===== ===== Clean Up ===== =====
-
 	peoples.close();
 	titles.close();
 	firstNames.close();
@@ -137,17 +140,73 @@ int main(int argc, cString argv[]) {
 	return 0;
 }
 
-void InputQuary(int* id, int* dist) {
+void ExecuteTree(std::vector<std::string>& input) {
+	//----- ----- input ----- -----
 
-	std::cout << INPUTREQUEST;
-	std::cin >> *id >> *dist;
+	int id;
+	int dist;
 
-	while(std::cin.fail()) {
-		std::cin.clear();
-		std::cin.ignore();
-		std::cin.ignore(INT_MAX, '\n');
+	id = atoi(input[1].c_str());
+	dist = atoi(input[2].c_str());
 
-		std::cout << FAILEDINPUT;
-		std::cin >> *id >> *dist;
+	//----- ----- logic ----- -----
+
+	auto relations = dataHandler::GetRelations(id, dist);//call to API
+	auto smalTree = CreateTree(relations.first);
+	auto generations = SortPersons(smalTree);
+	auto families = CreatFamilies(smalTree);
+
+	std::vector<visGen> treePeopleVisualisator;
+	for(int i = 0; i < generations.size(); i++) {
+		visGen element;
+		for(auto& it : generations[i]) {
+			element.push_back(std::pair(it, MLMSElement(PersonToString(dataHandler::GetPerson(it), false), Box)));//call to API
+		}
+		treePeopleVisualisator.push_back(element);
 	}
+
+
+	auto generationFamilys = SplitFamilysToGenerations(families, generations);
+	for(int i = 0; i < generationFamilys.second.size(); i++) {
+		for(auto& it : generationFamilys.second[i]) {
+			treePeopleVisualisator[i].push_back(std::pair<int, MLMSElement>(it, MLMSElement("", NoBox, '|', 1)));
+		}
+	}
+
+	std::vector<std::vector<family>> generationPlummbings;
+	for(int i = 0; i < generationFamilys.first.size(); i++) {
+		generationPlummbings.push_back(CreatePlumbingInfos(generationFamilys.first[i], treePeopleVisualisator[i], treePeopleVisualisator[i + 1]));
+	}
+	generationPlummbings.push_back(std::vector<family>());
+
+	//----- ----- rendering ----- -----
+
+	for(int g = 0; g < treePeopleVisualisator.size(); g++) {
+		int maxLineCount = 0;
+		for(int i = 0; i < treePeopleVisualisator[g].size(); i++) {
+			int newLineCount = treePeopleVisualisator[g][i].second.GetLineCount();
+			maxLineCount = maxLineCount > newLineCount ? maxLineCount : newLineCount;
+		}
+		for(int j = 0; j < maxLineCount; j++) {
+			for(int i = 0; i < treePeopleVisualisator[g].size(); i++) {
+				std::cout << treePeopleVisualisator[g][i].second.GetLine(j);
+			}
+			std::cout << std::endl;
+		}
+		std::cout << PlumbGeneration(generationPlummbings[g]) << std::endl;
+	}
+}
+
+void ExecutePerson(std::vector<std::string>& input) {
+	//----- ----- input ----- -----
+
+	int id = stoi(input[1]);
+
+	//----- ----- logic ----- -----
+
+	personInfos person = dataHandler::GetPerson(id);//call to API
+
+	//----- ----- rendering ----- -----
+
+	std::cout << PersonToString(person) << std::endl;
 }
