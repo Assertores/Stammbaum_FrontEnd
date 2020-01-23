@@ -15,13 +15,23 @@ void ExecutePerson(std::vector<std::string>& input);
 
 int main(int argc, cString argv[]) {
 	//===== ===== Init ===== =====
+	std::string path;
 
-	if(2 != argc) {
-		std::cout << ERROR_ARGUMENTCOUNT << std::endl;
-		return -1;
+	if(2 <= argc) {
+		path = argv[1];
+	} else{
+		std::cout << ERROR_ARGUMENTCOUNT << ". Please input the path to the database: ";
+
+		if(std::cin.eof()) {
+			return -1;
+		}
+
+		std::getline(std::cin, path);
+		if(path.empty())
+			return -1;
 	}
 
-	std::string path = argv[1];
+	
 
 	std::ifstream peoples(path + FILE_PEOPLES);
 
@@ -91,8 +101,8 @@ int main(int argc, cString argv[]) {
 			continue;
 
 		std::istringstream tmp(inputBuffer);
-		inputBuffer.clear();
 		while(tmp.good()) {
+			inputBuffer.clear();
 			tmp >> inputBuffer;
 			input.push_back(inputBuffer);
 		}
@@ -141,6 +151,7 @@ int main(int argc, cString argv[]) {
 	}
 
 	//===== ===== Clean Up ===== =====
+
 	peoples.close();
 	titles.close();
 	firstNames.close();
