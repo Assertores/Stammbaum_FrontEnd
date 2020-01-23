@@ -60,12 +60,12 @@ struct personInfos {
 	sexType sex;
 
 	std::tm birthday;
-	std::string placeOfBirth = nullptr;
+	std::string placeOfBirth;
 
 	std::tm death;
-	std::string placeOfDeath = nullptr;
+	std::string placeOfDeath;
 
-	std::string remarks = nullptr;
+	std::string remarks;
 
 	//audiofile
 	//pictures
