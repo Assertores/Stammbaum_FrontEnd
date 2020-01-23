@@ -94,17 +94,14 @@ std::string PersonToString(const personInfos person, bool longVariant/* = true*/
 		value << person.firstNames[0] << " ";
 
 		if(person.firstNames.size() > 1) {
-			if(longVariant)
-				value << "(";
-
 			for(size_t i = 1; i < person.firstNames.size() - 1; i++) {
 				if(longVariant)
-					value << person.firstNames[i] << ", ";
+					value << person.firstNames[i] << " ";
 				else
 					value << person.firstNames[i][0] << ". ";
 			}
 			if(longVariant)
-				value << person.firstNames[person.firstNames.size() - 1] << ")" << std::endl;
+				value << person.firstNames[person.firstNames.size() - 1] << std::endl;
 			else
 				value << person.firstNames[person.firstNames.size() - 1][0] << ". ";
 		}
@@ -117,15 +114,16 @@ std::string PersonToString(const personInfos person, bool longVariant/* = true*/
 	if(person.lastNames.size() <= 0) {
 		value << "NAN";
 	} else {
+		value << person.lastNames[person.lastNames.size() - 1];
+
 		if(longVariant && person.lastNames.size() > 1) {
-			value << "(";
+			value << " (forma: ";
 			for(size_t i = 0; i < person.lastNames.size() - 2; i++) {
 				value << person.lastNames[i] << ", ";
 			}
-			value << person.lastNames[person.lastNames.size() - 2] << ") ";
+			value << person.lastNames[person.lastNames.size() - 2] << ")" << std::endl;
 		}
-
-		value << person.lastNames[person.lastNames.size() - 1];
+		
 	}
 	value << std::endl;
 
