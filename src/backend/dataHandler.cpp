@@ -1,23 +1,22 @@
 //===== ===== Extern ===== =====
 #include <cassert>
 #include <string>
+#include <tuple>
 #include <iostream>
+#include <unordered_map>
 
 //===== ===== Intern ===== =====
 #include "dataHandler.h"
 
 #include <csv_parser.hpp>
-#include <string>
-#include <tuple>
+
 #include "../utility/types_parser.hpp"
 #include "../utility/stringCollection.h"
 
-static std::map<uint64_t, std::tuple<bool, std::string, sexType, std::tm, std::string, std::tm, std::string, std::string>> tmp_table_peoples;
-static std::map<uint64_t, std::tuple<size_t, bool, std::string>> tmp_table_titles;
-static std::map<uint64_t, std::tuple<size_t, bool, std::string>> tmp_table_firstnames;
-static std::map<uint64_t, std::tuple<size_t, bool, std::string>> tmp_table_lastnames;
 static std::map<uint64_t, std::tuple<size_t, bool, relType>> tmp_table_bloodlines;
 static std::map<uint64_t, std::tuple<size_t, bool, relType, std::tm, std::tm>> tmp_table_relationships;
+
+static std::unordered_map<uint64_t, personInfos> persons_table;
 
 /// <summary>
 /// Table types [x] <- is key
@@ -61,8 +60,6 @@ static void InitBloodLinesTable(std::ifstream& peoples);
 /// </summary>
 static void InitRelationshipsTable(std::ifstream& peoples);
 
-static void BuildTables(void);
-
 namespace dataHandler {
 	void InitTables(std::ifstream& peoples, std::ifstream& titles, std::ifstream& firstNames, std::ifstream& lastNames, std::ifstream& bloodLines, std::ifstream& relationships) {
 		assert(!peoples.fail());
@@ -78,8 +75,6 @@ namespace dataHandler {
 		InitLastNamesTable(lastNames);
 		InitBloodLinesTable(bloodLines);
 		InitRelationshipsTable(relationships);
-
-		BuildTables();
 	}
 
 	std::pair<std::set<blood>, std::set<relation>> GetRelations(const int rootID/* = 0*/, const int dinst/* = -1*/) {
@@ -88,7 +83,10 @@ namespace dataHandler {
 	}
 
 	personInfos GetPerson(const int personID) {
-		assert(false && "not implimented");
+		//assert(false && "not implimented");
+		if (persons_table.count(personID)) {
+			return persons_table[personID];
+		}
 		return personInfos();
 	}
 }
@@ -120,16 +118,23 @@ static void InitPeoplesTable(std::ifstream& peoples) {
 			std::tm, std::string,
 			std::string>(line);
 
-		tmp_table_peoples[std::get<0>(ret)] = std::make_tuple(
-			std::get<1>(ret),
-			std::get<2>(ret),
-			std::get<3>(ret),
-			std::get<4>(ret),
-			std::get<5>(ret),
-			std::get<6>(ret),
-			std::get<7>(ret),
-			std::get<8>(ret)
-		);
+		auto& person = persons_table[std::get<0>(ret)];
+
+		// TODO: handle confidential = std::get<1>(ret)
+
+		person.suffix = std::get<2>(ret);
+		person.sex = std::get<3>(ret);
+		person.birthday = std::get<4>(ret);
+		person.placeOfBirth = std::get<5>(ret);
+		person.death = std::get<6>(ret);
+		person.placeOfDeath = std::get<7>(ret);
+		person.remarks = std::get<8>(ret);
+
+		// TODO: determain use case
+		person.suffix.shrink_to_fit();
+		person.placeOfBirth.shrink_to_fit();
+		person.placeOfDeath.shrink_to_fit();
+		person.remarks.shrink_to_fit();
 	}
 }
 
@@ -150,11 +155,16 @@ static void InitTitlesTable(std::ifstream& titles) {
 			bool,
 			std::string>(line);
 
-		tmp_table_titles[std::get<0>(ret)] = std::make_tuple(
-			std::get<1>(ret),
-			std::get<2>(ret),
-			std::get<3>(ret)
-		);
+		// TODO: confidential
+
+		// get person
+		if (!persons_table.count(std::get<0>(ret))) {
+			std::cerr << "error: titles contain entry for non existent personID '" << std::get<0>(ret) << "'\n";
+		}
+
+		auto& person = persons_table[std::get<0>(ret)];
+		// TODO: some how ensure the order of titles
+		person.titles.emplace_back(std::get<3>(ret));
 	}
 }
 
@@ -175,11 +185,16 @@ static void InitFirstNamesTable(std::ifstream& firstnames) {
 			bool,
 			std::string>(line);
 
-		tmp_table_firstnames[std::get<0>(ret)] = std::make_tuple(
-			std::get<1>(ret),
-			std::get<2>(ret),
-			std::get<3>(ret)
-		);
+		// TODO: confidential
+
+		// get person
+		if (!persons_table.count(std::get<0>(ret))) {
+			std::cerr << "error: firstNames contain entry for non existent personID '" << std::get<0>(ret) << "'\n";
+		}
+
+		auto& person = persons_table[std::get<0>(ret)];
+		// TODO: some how ensure the order of names
+		person.firstNames.emplace_back(std::get<3>(ret));
 	}
 }
 
@@ -200,11 +215,16 @@ static void InitLastNamesTable(std::ifstream& lastnames) {
 			bool,
 			std::string>(line);
 
-		tmp_table_lastnames[std::get<0>(ret)] = std::make_tuple(
-			std::get<1>(ret),
-			std::get<2>(ret),
-			std::get<3>(ret)
-		);
+		// TODO: confidential
+
+		// get person
+		if (!persons_table.count(std::get<0>(ret))) {
+			std::cerr << "error: lastNames contain entry for non existent personID '" << std::get<0>(ret) << "'\n";
+		}
+
+		auto& person = persons_table[std::get<0>(ret)];
+		// TODO: some how ensure the order of names
+		person.lastNames.emplace_back(std::get<3>(ret));
 	}
 }
 
@@ -260,8 +280,5 @@ static void InitRelationshipsTable(std::ifstream& relationships) {
 			std::get<5>(ret)
 		);
 	}
-}
-
-static void BuildTables(void) {
 }
 
