@@ -20,38 +20,44 @@ static std::map<uint64_t, std::tuple<size_t, bool, relType>> tmp_table_bloodline
 static std::map<uint64_t, std::tuple<size_t, bool, relType, std::tm, std::tm>> tmp_table_relationships;
 
 /// <summary>
-/// Table types
-/// int, bool, string, sexType, tm, string, tm, string, string
+/// Table types [x] <- is key
+/// [int], bool, string, sexType, tm, string, tm, string, string
+/// feads into the suffix, sex, birthday, placeOfBirth, death, placeOfDeath, remarks vector in the personInfos struct
 /// </summary>
 static void InitPeoplesTable(std::ifstream& peoples);
 
 /// <summary>
-/// Table types
-/// int, int, bool, string
+/// Table types [x] <- is key
+/// [int, int], bool, string
+/// feads into the titles vector in the personInfos struct
 /// </summary>
 static void InitTitlesTable(std::ifstream& peoples);
 
 /// <summary>
-/// Table types
-/// int, int, bool, string
+/// Table types [x] <- is key
+/// [int, int], bool, string
+/// feads into the firstNames vector in the personInfos struct
 /// </summary>
 static void InitFirstNamesTable(std::ifstream& peoples);
 
 /// <summary>
-/// Table types
-/// int, int, bool, string
+/// Table types [x] <- is key
+/// [int, int], bool, string
+/// feads into the lastNames vector in the personInfos struct
 /// </summary>
 static void InitLastNamesTable(std::ifstream& peoples);
 
 /// <summary>
-/// Table types
-/// int, int, bool, relType
+/// Table types [x] <- is key
+/// [int, int], bool, relType
+/// feads into the blood struct
 /// </summary>
 static void InitBloodLinesTable(std::ifstream& peoples);
 
 /// <summary>
-/// Table types
-/// int, int, bool, relType, tm, tm
+/// Table types [x] <- is key
+/// [int, int], bool, relType, tm, tm
+/// feads into the relation struct
 /// </summary>
 static void InitRelationshipsTable(std::ifstream& peoples);
 
