@@ -52,17 +52,23 @@ struct relation {
 };
 
 struct personInfos {
-	std::vector<cString> titles;
-	std::vector<cString> firstNames;
-	cString suffix = nullptr;
-	std::vector<cString> lastNames;
+	std::vector<std::string> titles;
+	std::vector<std::string> firstNames;
+	std::string suffix;
+	std::vector<std::string> lastNames;
+
 	sexType sex;
+
 	std::tm birthday;
-	cString placeOfBirth = nullptr;
+	std::string placeOfBirth = nullptr;
+
 	std::tm death;
-	cString placeOfDeath = nullptr;
-	cString remarks = nullptr;
+	std::string placeOfDeath = nullptr;
+
+	std::string remarks = nullptr;
+
 	//audiofile
 	//pictures
 	//video
 };
+
