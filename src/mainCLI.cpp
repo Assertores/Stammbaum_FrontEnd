@@ -77,8 +77,19 @@ int main(int argc, cString argv[]) {
 		//----- ----- input ----- -----
 		input.clear();
 
+		// eg CTRL-D in bash
+		if (std::cin.eof()) {
+			exit = true;
+			std::cout << '\n';
+			break;
+		}
+
 		std::cout << "> ";
+
 		std::getline(std::cin, inputBuffer);
+		if (inputBuffer.empty())
+			continue;
+
 		std::istringstream tmp(inputBuffer);
 		inputBuffer.clear();
 		while(tmp.good()) {
