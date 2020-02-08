@@ -63,8 +63,9 @@ void SortGeneration(generations& gen, const std::vector<std::vector<family>>& fa
  * @brief				splites the families into the diferent generations (may split families into multiples between generations)
  * @param[in] families	all families
  * @param[in] peoples	the different generations
- * @return		first:	the splitted families
- * 				second:	the additional filler persons, that have to be added into
+ * @return				a pair of informations
+ * @retval first		the splitted families
+ * @retval second		the additional filler persons, that have to be added into
  */
 std::pair<std::vector<std::vector<family>>, generations> SplitFamilysToGenerations(const std::vector<family>& families, const generations& peoples);
 
