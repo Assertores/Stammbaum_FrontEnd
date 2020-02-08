@@ -12,7 +12,7 @@
 
 typedef const char* cString;
 typedef std::map<int, treeBuilderElement> tree;
-typedef std::vector<std::set<int>> generations;
+typedef std::vector<std::vector<int>> generations;
 typedef std::pair<std::set<int>, std::set<int>> family;
 typedef std::vector<std::pair<int, MLMSElement>> visGen;//visual Generation
 

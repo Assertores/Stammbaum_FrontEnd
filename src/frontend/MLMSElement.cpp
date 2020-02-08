@@ -55,7 +55,7 @@ MLMSElement::MLMSElement(std::string element, Boxing boxType/* = NoBox*/, char c
 	}
 }
 
-int MLMSElement::GetSize() {
+int MLMSElement::GetSize() const {
 	return size;
 }
 

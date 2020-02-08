@@ -180,8 +180,10 @@ void ExecuteTree(std::vector<std::string>& input) {
 
 	auto relations = dataHandler::GetRelations(id, dist);//call to API
 	auto smalTree = CreateTree(relations.first);
-	auto generations = SortPersons(smalTree);
+	SortPersons(smalTree);
+	auto generations = GenerateGenerationsFromTree(smalTree);
 	auto families = CreatFamilies(smalTree);
+	SortGeneration(generations, families);
 
 	std::vector<visGen> treePersonVisualisator;
 	for(int i = 0; i < generations.size(); i++) {

@@ -20,7 +20,7 @@ class MLMSElement {
 public:
 	MLMSElement(std::string element, Boxing boxType = NoBox, char clearChar = ' ', unsigned int minSize = 0);
 
-	int GetSize();
+	int GetSize() const;
 	int GetLineCount();
 	std::string GetLine(int line);
 

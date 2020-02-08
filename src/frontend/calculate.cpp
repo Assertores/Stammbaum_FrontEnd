@@ -51,14 +51,15 @@ tree CreateTree(const std::set<blood>& rels) {
 	return treePersons;
 }
 
-generations SortPersons(tree& treePersons) {
-	generations value;
-
-
+void SortPersons(tree& treePersons) {
 	for(auto& it : treePersons) {
 		if(it.second.parents.size() <= 0)
 			it.second.UpdateDown(0);
 	}
+}
+
+generations GenerateGenerationsFromTree(const tree& treePersons) {
+	generations value;
 
 	{
 		int max = -1;
@@ -67,18 +68,18 @@ generations SortPersons(tree& treePersons) {
 		}
 
 		for(int i = 0; i < max + 1; i++) {
-			value.push_back(std::set<int>());
+			value.push_back(std::vector<int>());
 		}
 	}
 
 	for(auto& it : treePersons) {
-		value[it.second.number].emplace(it.first);
+		value[it.second.number].push_back(it.first);
 	}
 
 	return value;
 }
 
-std::vector<family> CreatFamilies(tree& treePersons) {
+std::vector<family> CreatFamilies(const tree& treePersons) {
 	std::vector<family> value;
 
 	std::set<int> childrenToCheck;
@@ -96,11 +97,11 @@ std::vector<family> CreatFamilies(tree& treePersons) {
 
 		family element;
 
-		for(int i = 0; i < treePersons[current].parents.size(); i++) {
-			element.first.emplace(treePersons[current].parents[i]->id);
+		for(int i = 0; i < treePersons.at(current).parents.size(); i++) {
+			element.first.emplace(treePersons.at(current).parents[i]->id);
 		}
 
-		std::vector<treeBuilderElement*> parents = treePersons[current].parents;
+		const std::vector<treeBuilderElement*> parents = treePersons.at(current).parents;
 		for(auto& it : parents[0]->childrens) {
 			bool found = false;
 			for(int i = 1; i < parents.size(); i++) {
@@ -126,27 +127,31 @@ std::vector<family> CreatFamilies(tree& treePersons) {
 	return value;
 }
 
-std::pair<std::vector<std::vector<family>>, generations> SplitFamilysToGenerations(std::vector<family>& families, generations& peoples) {
+void SortGeneration(generations& gen, const std::vector<family>& fam) {
+	//TODO: Impliment
+}
+
+std::pair<std::vector<std::vector<family>>, generations> SplitFamilysToGenerations(const std::vector<family>& families,const generations& peoples) {
 	std::vector<std::vector<family>> value;
 	generations additionalPeoples;
 
-	additionalPeoples.push_back(std::set<int>());
+	additionalPeoples.push_back(std::vector<int>());
 	for(int i = 1; i < peoples.size(); i++) {
 		value.push_back(std::vector<family>());
-		additionalPeoples.push_back(std::set<int>());
+		additionalPeoples.push_back(std::vector<int>());
 	}
 
 	for(int i = 0; i < families.size(); i++) {
 		int parent = *(families[i].first.begin());
 		for(int j = 0; j < peoples.size(); j++) {
-			if(peoples[j].find(parent) != peoples[j].end()) {
+			if(FindInVector(peoples[j], parent) >= 0) {
 				value[j].push_back(families[i]);
 				for(auto& it : families[i].second) {
 					family element;
 					element.first.emplace(it);
 					element.second.emplace(it);
-					for(int serchGen = j + 1; serchGen < peoples.size() && peoples[serchGen].find(it) == peoples[serchGen].end(); serchGen++) {
-						additionalPeoples[serchGen].emplace(it);
+					for(int serchGen = j + 1; serchGen < peoples.size() && FindInVector(peoples[serchGen], it) < 0; serchGen++) {
+						additionalPeoples[serchGen].push_back(it);
 						value[serchGen].push_back(element);
 					}
 				}
@@ -158,7 +163,7 @@ std::pair<std::vector<std::vector<family>>, generations> SplitFamilysToGeneratio
 	return std::pair<std::vector<std::vector<family>>, generations>(value, additionalPeoples);
 }
 
-std::vector<family> CreatePlumbingInfos(std::vector<family>& families, visGen& upperGeneration, visGen& lowerGeneration) {
+std::vector<family> CreatePlumbingInfos(const std::vector<family>& families,const visGen& upperGeneration, visGen& lowerGeneration) {
 
 	std::vector<family> thisGeneration;
 	for(int i = 0; i < families.size(); i++) {
