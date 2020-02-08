@@ -18,46 +18,46 @@ static std::map<uint64_t, std::tuple<size_t, bool, relType, std::tm, std::tm>> t
 
 static std::unordered_map<uint64_t, personInfos> persons_table;
 
-/// <summary>
-/// Table types [x] <- is key
-/// [int], bool, string, sexType, tm, string, tm, string, string
-/// feads into the suffix, sex, birthday, placeOfBirth, death, placeOfDeath, remarks vector in the personInfos struct
-/// </summary>
+/*!
+ * @brief	Table types [x] <- is key
+ *			[int], bool, string, sexType, tm, string, tm, string, string
+ *			feads into the suffix, sex, birthday, placeOfBirth, death, placeOfDeath, remarks vector in the personInfos struct
+ */
 static void InitPeoplesTable(std::ifstream& peoples);
 
-/// <summary>
-/// Table types [x] <- is key
-/// [int, int], bool, string
-/// feads into the titles vector in the personInfos struct
-/// </summary>
+/*!
+ * @brief	Table types [x] <- is key
+ *			[int, int], bool, string
+ *			feads into the titles vector in the personInfos struct
+ */
 static void InitTitlesTable(std::ifstream& peoples);
 
-/// <summary>
-/// Table types [x] <- is key
-/// [int, int], bool, string
-/// feads into the firstNames vector in the personInfos struct
-/// </summary>
+/*!
+ * @brief	Table types [x] <- is key
+ *			[int, int], bool, string
+ *			feads into the firstNames vector in the personInfos struct
+ */
 static void InitFirstNamesTable(std::ifstream& peoples);
 
-/// <summary>
-/// Table types [x] <- is key
-/// [int, int], bool, string
-/// feads into the lastNames vector in the personInfos struct
-/// </summary>
+/*!
+ * @brief	Table types [x] <- is key
+ *			[int, int], bool, string
+ *			feads into the lastNames vector in the personInfos struct
+ */
 static void InitLastNamesTable(std::ifstream& peoples);
 
-/// <summary>
-/// Table types [x] <- is key
-/// [int, int], bool, relType
-/// feads into the blood struct
-/// </summary>
+/*!
+ * @brief	Table types [x] <- is key
+ *			[int, int], bool, relType
+ *			feads into the blood struct
+ */
 static void InitBloodLinesTable(std::ifstream& peoples);
 
-/// <summary>
-/// Table types [x] <- is key
-/// [int, int], bool, relType, tm, tm
-/// feads into the relation struct
-/// </summary>
+/*!
+ * @brief	Table types [x] <- is key
+ *			[int, int], bool, relType, tm, tm
+ *			feads into the relation struct
+ */
 static void InitRelationshipsTable(std::ifstream& peoples);
 
 namespace dataHandler {
