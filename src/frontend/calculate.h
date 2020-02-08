@@ -53,11 +53,15 @@ generations GenerateGenerationsFromTree(const tree& treePersons);
 std::vector<family> CreatFamilies(const tree& treePersons);
 
 /*!
- * @brief				trys to minimice the distance between family members
- * @param[in,out] gen	the generations, that have to be sorted
- * @param[in] fam		the families, that are the base on with the algorithem tryes to minimice the distance
+ * @brief							trys to minimice the distance between family members
+ * @param[in] upperGeneration		the generation of the parents
+ * @param[in] upperFamilies			the families with the parents
+ * @param[in,out] currentGeneration	the generation to be sorted
+ * @param[in] lowerFamilies			the families with the childrens
+ * @param[in] lowerGeneration		the generation of the childrens
+ * @return							whether \p currentGeneration has been chaned or not
  */
-void SortGeneration(generations& gen, const std::vector<std::vector<family>>& fams);
+bool SortGeneration(const std::vector<int>* upperGeneration, const std::vector<family>* upperFamilies, std::vector<int>& currentGeneration, const std::vector<family>* lowerFamilies, const std::vector<int>* lowerGeneration);
 
 /*!
  * @brief				splites the families into the diferent generations (may split families into multiples between generations)

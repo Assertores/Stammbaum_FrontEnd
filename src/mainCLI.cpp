@@ -191,7 +191,6 @@ void ExecuteTree(std::vector<std::string>& input) {
 			generations[i].push_back(generationFamilys.second[i][j]);
 		}
 	}
-	SortGeneration(generations, generationFamilys.first);
 
 	std::vector<visGen> treePersonVisualisator;
 	for(int i = 0; i < generations.size(); i++) {
