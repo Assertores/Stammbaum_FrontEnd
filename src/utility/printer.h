@@ -11,35 +11,39 @@
 //===== ===== Intern ===== =====
 #include "types.h"
 
-/// <summary>
-/// returns a human readable string of the type
-/// </summary>
+/*!
+ * @param[in] t	the type of the relation
+ * @return		a human readable string of \p t
+*/
 cString relToString(const relType t);
 
-/// <summary>
-/// returns a symble of the type
-/// </summary>
+/*!
+ * @param[in] t	the type of the relation
+ * @return		a symble of \p t
+ */
 char relToChar(const relType t);
 
-/// <summary>
-/// returns a human readable string of the type
-/// </summary>
+/*!
+ * @param[in] t	the sex
+ * @return		a human readable string of \p t
+ */
 cString sexToString(const sexType t);
 
-/// <summary>
-/// returns a symble of the type
-/// </summary>
+/*!
+ * @param[in] t	the sex
+ * @return		a symble of \p t
+ */
 char sexToChar(const sexType t);
 
-/// <summary>
-/// returns the person as human readable string
-/// </summary>
+/*!
+ * @param[in] person		the informations to the person
+ * @param[in] longVariant	wheter the informations should be compressed or not
+ * @return					the person as human readable string
+ */
 std::string PersonToString(const personInfos person, bool longVariant = true);
 
-/// <summary>
-/// returns the person as human readable string
-/// a list of families
-/// a familie contains all connection above (parents) and all connection below (children)
-/// the numbers are the charcount of the connection
-/// </summary>
-std::string PlumbGeneration(std::vector<std::pair<std::set<int>, std::set<int>>>& families);
+/*!
+ * @param[in] families	a list of families (the numbers are the charcount of the connection)
+ * @return				the person as human readable string
+ */
+std::string PlumbGeneration(const std::vector<family>& families);

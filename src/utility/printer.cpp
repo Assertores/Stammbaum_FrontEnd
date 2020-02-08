@@ -155,7 +155,7 @@ std::string PersonToString(const personInfos person, bool longVariant/* = true*/
 	return value.str();
 }
 
-inline bool IsAConnection(std::pair<std::set<int>, std::set<int>>& allConnections, int key) {
+inline bool IsAConnection(const family& allConnections, int key) {
 	if(allConnections.first.find(key) != allConnections.first.end())
 		return true;
 	return allConnections.second.find(key) != allConnections.second.end();
@@ -165,7 +165,7 @@ inline bool IsConnectionUpper(std::pair<std::set<int>, std::set<int>>& allConnec
 	return allConnections.first.find(key) != allConnections.first.end();
 }
 
-std::string PlumbGeneration(std::vector<std::pair<std::set<int>, std::set<int>>>& families) {
+std::string PlumbGeneration(const std::vector<family>& families) {
 	std::string value;
 
 	std::pair<std::set<int>, std::set<int>> prevfam; //previous families
