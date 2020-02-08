@@ -90,7 +90,7 @@ std::vector<family> CreatFamilies(const tree& treePersons) {
 	while(!childrenToCheck.empty()) {
 		int current = *(childrenToCheck.begin());
 
-		if(treePersons[current].parents.empty()) {
+		if(treePersons.at(current).parents.empty()) {
 			childrenToCheck.erase(current);
 			continue;
 		}
