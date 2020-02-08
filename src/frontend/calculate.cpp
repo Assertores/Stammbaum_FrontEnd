@@ -127,11 +127,11 @@ std::vector<family> CreatFamilies(const tree& treePersons) {
 	return value;
 }
 
-void SortGeneration(generations& gen, const std::vector<family>& fam) {
+void SortGeneration(generations& gen, const std::vector<std::vector<family>>& fam) {
 	//TODO: Impliment
 }
 
-std::pair<std::vector<std::vector<family>>, generations> SplitFamilysToGenerations(const std::vector<family>& families,const generations& peoples) {
+std::pair<std::vector<std::vector<family>>, generations> SplitFamilysToGenerations(const std::vector<family>& families, const generations& peoples) {
 	std::vector<std::vector<family>> value;
 	generations additionalPeoples;
 
@@ -144,13 +144,13 @@ std::pair<std::vector<std::vector<family>>, generations> SplitFamilysToGeneratio
 	for(int i = 0; i < families.size(); i++) {
 		int parent = *(families[i].first.begin());
 		for(int j = 0; j < peoples.size(); j++) {
-			if(FindInVector(peoples[j], parent) >= 0) {
+			if(ExistsInVector(peoples[j], parent)) {
 				value[j].push_back(families[i]);
 				for(auto& it : families[i].second) {
 					family element;
 					element.first.emplace(it);
 					element.second.emplace(it);
-					for(int serchGen = j + 1; serchGen < peoples.size() && FindInVector(peoples[serchGen], it) < 0; serchGen++) {
+					for(int serchGen = j + 1; serchGen < peoples.size() && !ExistsInVector(peoples[serchGen], it); serchGen++) {
 						additionalPeoples[serchGen].push_back(it);
 						value[serchGen].push_back(element);
 					}
@@ -189,7 +189,7 @@ std::vector<family> CreatePlumbingInfos(const std::vector<family>& families, con
 			}
 			connection += lowerGeneration[j].second.GetSize() / 2;//TODO: check for overlaps
 			//if(lowerGeneration[j].second.GetSize() > 1)
-				connection++;
+			connection++;
 
 			element.second.emplace(connection);
 		}

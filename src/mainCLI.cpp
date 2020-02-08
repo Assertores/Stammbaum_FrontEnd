@@ -183,23 +183,29 @@ void ExecuteTree(std::vector<std::string>& input) {
 	SortPersons(smalTree);
 	auto generations = GenerateGenerationsFromTree(smalTree);
 	auto families = CreatFamilies(smalTree);
-	SortGeneration(generations, families);
+
+	auto generationFamilys = SplitFamilysToGenerations(families, generations);
+
+	for(int i = 0; i < generationFamilys.second.size() && i < generations.size(); i++) {
+		for(int j = 0; j < generationFamilys.second[i].size(); j++) {
+			generations[i].push_back(generationFamilys.second[i][j]);
+		}
+	}
+	SortGeneration(generations, generationFamilys.first);
 
 	std::vector<visGen> treePersonVisualisator;
 	for(int i = 0; i < generations.size(); i++) {
 		visGen element;
 		for(auto& it : generations[i]) {
-			element.push_back(std::pair(it, MLMSElement(PersonToString(dataHandler::GetPerson(it), false), Box)));//call to API
+			if(ExistsInVector2D(generationFamilys.second, it)) {
+				MLMSElement textBox("", NoBox, '|', 1);
+				element.push_back(std::pair(it, textBox));
+			} else {
+				MLMSElement textBox(PersonToString(dataHandler::GetPerson(it), false), Box);//call to API
+				element.push_back(std::pair(it, textBox));
+			}
 		}
 		treePersonVisualisator.push_back(element);
-	}
-
-
-	auto generationFamilys = SplitFamilysToGenerations(families, generations);
-	for(int i = 0; i < generationFamilys.second.size(); i++) {
-		for(auto& it : generationFamilys.second[i]) {
-			treePersonVisualisator[i].push_back(std::pair<int, MLMSElement>(it, MLMSElement("", NoBox, '|', 1)));
-		}
 	}
 
 	std::vector<std::vector<family>> generationPlummbings;
