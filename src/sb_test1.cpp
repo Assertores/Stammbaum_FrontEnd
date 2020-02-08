@@ -144,7 +144,8 @@ int main(void) {
 	//===== ===== Relations ===== =====
 
 	auto tree = CreateTree(FACEGetRelations().first);
-	auto retVal = SortPersons(tree);
+	SortPersons(tree);
+	auto retVal = GenerateGenerationsFromTree(tree);
 
 	for(int i = 0; i < retVal.size(); i++) {
 		for(auto& it : retVal[i]) {
@@ -237,8 +238,10 @@ int main(void) {
 
 	auto relations = FACEGetRelations();
 	auto smalTree = CreateTree(relations.first);
-	auto generations = SortPersons(smalTree);
+	SortPersons(smalTree);
+	auto generations = GenerateGenerationsFromTree(smalTree);
 	auto families = CreatFamilies(smalTree);
+	SortGeneration(generations, families);
 
 	std::vector<visGen> treePersonVisualisator;
 	for(int i = 0; i < generations.size(); i++) {

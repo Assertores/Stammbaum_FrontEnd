@@ -163,7 +163,7 @@ std::pair<std::vector<std::vector<family>>, generations> SplitFamilysToGeneratio
 	return std::pair<std::vector<std::vector<family>>, generations>(value, additionalPeoples);
 }
 
-std::vector<family> CreatePlumbingInfos(const std::vector<family>& families,const visGen& upperGeneration, visGen& lowerGeneration) {
+std::vector<family> CreatePlumbingInfos(const std::vector<family>& families, const visGen& upperGeneration, const visGen& lowerGeneration) {
 
 	std::vector<family> thisGeneration;
 	for(int i = 0; i < families.size(); i++) {
