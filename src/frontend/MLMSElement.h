@@ -12,10 +12,10 @@
  * use || to combine multiple elements
  */
 enum Boxing {
-	NoBox = 0,			/*!< wont add anithing */
-	Box = 1,			/*!< drawns a box with no ports around */
-	UpperPort = 2,		/*!< adds a port on the top of the box */
-	LowerPort = 4,		/*!< adds a port on the bottom of the box */
+	NoBox = 0,			//!< wont add anithing
+	Box = 1,			//!< drawns a box with no ports around
+	UpperPort = 2,		//!< adds a port on the top of the box
+	LowerPort = 4,		//!< adds a port on the bottom of the box
 };
 
 /*!
