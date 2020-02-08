@@ -27,8 +27,10 @@ MLMSElement::MLMSElement(std::string element, Boxing boxType/* = NoBox*/, char c
 	emptyLine.clear();
 	emptyLine.append(size, clearChar);
 
-	if(boxType == NoBox)
+	if(!(boxType & Box))
 		return;
+
+	//TODO: handle ports
 
 	size += 2;
 	emptyLine.append(2, clearChar);
@@ -59,10 +61,10 @@ int MLMSElement::GetSize() const {
 	return size;
 }
 
-int MLMSElement::GetLineCount() {
+int MLMSElement::GetLineCount() const {
 	return lines.size();
 }
 
-std::string MLMSElement::GetLine(int line) {
+std::string MLMSElement::GetLine(const int line) {
 	return line < lines.size() ? lines[line] : emptyLine;
 }
