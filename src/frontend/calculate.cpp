@@ -103,8 +103,10 @@ std::vector<family> CreatFamilies(const tree& treePersons) {
 
 		const std::vector<treeBuilderElement*> parents = treePersons.at(current).parents;
 		for(auto& it : parents[0]->childrens) {
-			bool found = false;
+
+			bool found = true;
 			for(int i = 1; i < parents.size(); i++) {
+				found = false;
 				for(int j = 0; j < parents[i]->childrens.size(); j++) {
 					if(parents[i]->childrens[j]->id == it->id) {
 						found = true;
