@@ -52,7 +52,7 @@ struct relation {
 	std::tm end;	//!< end time of the relation (divorce, etc.)
 
 	/*! needed for map */
-	bool operator < (const blood& rhs) const {
+	bool operator < (const relation& rhs) const {
 		return (objectID != rhs.objectID) ? objectID < rhs.objectID : subjectID < rhs.subjectID;
 	}
 };
@@ -61,6 +61,7 @@ struct relation {
  * all informations regarding to a person
  */
 struct personInfos {
+	int id;
 	std::vector<std::string> titles;		//!< all titles (Dr., Prof., etc.)
 	std::vector<std::string> firstNames;	//!< all first names
 	std::string suffix;						//!< e.g. von und zu
