@@ -78,6 +78,7 @@ std::pair<std::set<blood>, std::set<relation>> FACEGetRelations2() {
 personInfos FACEGetPerson(const int personID) {
 	personInfos value;
 
+	value.id = personID;
 	value.firstNames.push_back("ID:");
 	value.lastNames.push_back(IToS(personID));
 
@@ -254,7 +255,7 @@ int main(void) {
 	for(int i = 0; i < generations.size(); i++) {
 		visGen element;
 		for(auto& it : generations[i]) {
-			if(ExistsInVector2D(generationFamilys.second, it)) {
+			if(ExistsInVector(generationFamilys.second[i], it)) {
 				MLMSElement textBox("", NoBox, '|', 1);
 				element.push_back(std::pair(it, textBox));
 			} else {

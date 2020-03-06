@@ -196,7 +196,7 @@ void ExecuteTree(std::vector<std::string>& input) {
 	for(int i = 0; i < generations.size(); i++) {
 		visGen element;
 		for(auto& it : generations[i]) {
-			if(ExistsInVector2D(generationFamilys.second, it)) {
+			if(ExistsInVector(generationFamilys.second[i], it)) {
 				MLMSElement textBox("", NoBox, '|', 1);
 				element.push_back(std::pair(it, textBox));
 			} else {
