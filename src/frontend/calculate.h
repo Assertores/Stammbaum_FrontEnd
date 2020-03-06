@@ -91,7 +91,7 @@ std::vector<family> CreatePlumbingInfos(const std::vector<family>& families, con
  */
 template<typename T>
 int FindInVector(const std::vector<T>& target, const T& element) {
-	int size = target.size();
+	int size = (int)target.size();
 	for(int i = 0; i < size; i++) {
 		if(target[i] == element)
 			return i;
@@ -119,10 +119,10 @@ inline bool ExistsInVector(const std::vector<T>& target, const T& element) {
  */
 template<typename T>
 bool ExistsInVector2D(const std::vector<std::vector<T>>& target, const T& element) {
-	int size = target.size();
-	for(int i = 0; i < size; i++) {
-		int innerSize = target[i].size();
-		for(int j = 0; j < innerSize; j++) {
+	size_t size = target.size();
+	for(size_t i = 0; i < size; i++) {
+		size_t innerSize = target[i].size();
+		for(size_t j = 0; j < innerSize; j++) {
 			if(target[i][j] == element)
 				return true;
 		}

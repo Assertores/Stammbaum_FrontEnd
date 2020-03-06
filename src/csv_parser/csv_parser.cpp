@@ -16,6 +16,8 @@ namespace csv_parser {
 		}
 
 		assert(false && "bool entry is neither");
+
+		return false;
 	}
 
 	template<>
@@ -27,7 +29,7 @@ namespace csv_parser {
 	template<>
 	uint32_t parse_entry(std::string_view string) {
 		size_t pos = 0;
-		return stoll(std::string{string}, &pos);
+		return (uint32_t)stoll(std::string{string}, &pos);
 	}
 
 	template<>
