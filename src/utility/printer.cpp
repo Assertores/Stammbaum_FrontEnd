@@ -78,6 +78,8 @@ char sexToChar(const sexType t) {
 std::string PersonToString(const personInfos person, bool longVariant/* = true*/) {
 	std::stringstream value;
 
+	value << person.id << std::endl;
+
 	if(person.titles.size() > 0) {
 		if(longVariant) {
 			for(size_t i = 0; i < person.titles.size(); i++) {
@@ -223,8 +225,17 @@ std::string PlumbGeneration(const std::vector<family>& families) {
 			}
 		}
 		value.append(1, '\n');
+
+		for(auto& it : families[currentFamilie].first) {
+			prevfam.first.insert(it);
+		}
+		for(auto& it : families[currentFamilie].second) {
+			prevfam.second.insert(it);
+		}
+#if HotFix
 		prevfam.first.merge(families[currentFamilie].first);
 		prevfam.second.merge(families[currentFamilie].second);
+#endif
 	}
 
 	//===== ===== drawing bottom spacing ===== =====
